@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon" href="../../public/favicon.ico" type="image/x-icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+        <title>Test Site - History page</title>
+        <link rel="stylesheet" href="../index.css">
+        <link rel="stylesheet" href="history.css">
+    </head>
+    
+    <body>
+        <header>
+            <p>History Page</p>
+            <div class="navigation-menu">
+                <button class="original-button"><a href="../index.html">Home</a></button>
+                <button class="original-button disabled-button" disabled>History</a></button>
+                <button class="original-button"><a href="Pages/contacts.html">Contacts</a></button>
+                <button class="original-button"><a href="Pages/about.html">About</a></button>
+            </div>
+        </header>
+        
+        <!-- On this page will be collected next metric information:
+        *  -->
+        <h3>Данная страница содержит в себе много текстово информации и картинок большого размера, ее можно отнести к разряду "тяжеловатых". Результаты ее тестирования должны показать задержки.</h3>
+        <span class="page-information"><p>Файл стилей имеет достаточный размер.</p></span>
+
+        <h2>Освоение космоса</h2>
+        <p>Освоение космоса — освоение (обживание, <a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C" title="Промышленность">промышленное</a> использование) человеком космического пространства и небесных тел с помощью космических аппаратов. Исследования космоса ведутся как с помощью пилотируемых космических полётов, так и с помощью автоматических космических аппаратов.</p>
+        <p>Техническому исследованию космоса предшествовало развитие <a href="https://ru.wikipedia.org/wiki/%D0%90%D1%81%D1%82%D1%80%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F" title="Астрономия">астрономии</a> и создание крупных и относительно эффективных ракет в первой половине XX века. Началом эпохи освоения космоса можно считать запуск первого искусственного спутника Земли — «<a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA-1" title="Спутник-1">Спутника-1</a>», запущенного Советским Союзом 4 октября 1957 г.</p>
+        <img class="usual-images" src="../../public/images/photo-of-the-Moon-by-Armstrong.jpg" title="First photo of the Moon taken by Nill Armstrong" alt="Photo of the Moon" width="300" height="300" />
+        
+        
+        <script src="../../send.js"></script>
+        <script>
+            let counter = new Counter();
+    
+            counter.init('D8F28E50-3339-11EC-9EDF-9F95580795B1', String(Math.random()).substr(2, 12), 'send test');
+            counter.setAdditionalParams({
+                env: 'production',
+                platform: 'desktop',
+                browser: 'chrome'
+            });
+    
+            counter.send('Connect', performance.timing.connectEnd - performance.timing.connectStart);
+            counter.send('ttfb', performance.timing.responseEnd - performance.timing.requestStart);
+        </script>
+    </body>
+</html>

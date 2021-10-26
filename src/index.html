@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon" href="../public/favicon.ico" type="image/x-icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="robots" content="index" />           <!--Letting searching robots (Yandex & Google) index pages-->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="description" content="Web site for Perfomance-tests" />
+        <meta name="keywords" content="Perfomance, tests, optimization, metrics" />
+    
+        <title>Perfomance test Site</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    
+    <body>
+        <header>
+            <p>Initial Page</p>
+            <div class="navigation-menu">
+                <button class="original-button disabled-button" disabled>History</button>
+                <button class="original-button"><a href="Pages/history.html">History</a></button>
+                <button class="original-button"><a href="Pages/contacts.html">Contacts</a></button>
+                <button class="original-button"><a href="Pages/about.html">About</a></button>
+            </div>
+        </header>
+        
+        <!-- On this page will be collected next metric information:
+        *  -->
+        <h3>Данная страница содержит в себе немного информации и действий, ее можно отнести к разряду "легких". Результаты ее тестирования не должны выдавать плохих результатов.</h3>
+        <span class="page-information"><p>В ней используется 1 вариант шрифта, нет картинок, анимаций и т.д. Файл стилей имеет небольшой размер.</p></span>
+        <h2>Информационный текст для главной страницы</h2>
+        <div class="main-block">
+            <p>Как уже ясно из названия, цель такого материала – максимально полно информировать пользователя о том, что представляет собой конкретный сайт. Естественно, материал также может быть оптимизирован, но чаще это все-таки какая-то щадящая оптимизация. То есть без многократного повторения одних и тех же ключей (особенно сложных), которые слишком уж убивают читабельность материала.</p>
+            <p>Преимущество информационных текстов на главной странице в том, что они содержат реально полезную информацию, а не стандартный набор штампов для сокрытия ключевых запросов. Поскольку информация по-настоящему полезна, читатели задерживаются на главной странице сайта достаточно долго, что отлично сказывается на поведенческих факторах. Ну а там, где поведенческие факторы хорошие, поисковые системы сделают все, чтобы поднять сайт на самый верх.</p>
+        </div>
+        <h2>Продающий текст на главной странице сайта</h2>
+        <div class="main-block">
+            <p>Пусть понятие «продающий текст» не вводит вас в заблуждение: этот формат совсем не обязательно должен что-то нахваливать и навязчиво предлагать. Хотя, конечно, бывает и такое. Скорее, такой вид контента призван дать понять читателю, что главная страница сайта полностью соответствует его ожиданиям. Посетителю дается заряд мотивации для посещения других страниц ресурса. Обычно продающие тексты на главных страницах размещают интернет-магазины, сайты услуг и другие площадки, стремящиеся максимально быстро приковать внимание читателя к своему предложению.</p>
+            <p>Продающий текст может быть оптимизирован. Например, главная страница этого сайта призвана не только красиво подавать услуги, но и бороться за высокие места в выдаче. Что, кстати, у нее отлично получается.</p>
+        </div>
+
+        <script src="../send.js"></script>
+        <script>
+
+            function browserDetailedInfo() {
+                let nVer = navigator.appVersion;
+                let nAgent = navigator.userAgent;
+                let browserName  = navigator.appName;
+                let fullVersion  = ''+parseFloat(navigator.appVersion); 
+                let majorVersion = parseInt(navigator.appVersion,10);
+                let nameOffset, verOffset, ix;
+
+                // In Opera, the true version is after "Opera" or after "Version"
+                if ((verOffset=nAgent.indexOf("Opera"))!=-1) {
+                    browserName = "Opera";
+                    fullVersion = nAgent.substring(verOffset+6);
+                    if ((verOffset=nAgent.indexOf("Version"))!=-1) {
+                        fullVersion = nAgent.substring(verOffset+8);
+                    }
+                }
+                // In MSIE, the true version is after "MSIE" in userAgent
+                else if ((verOffset=nAgent.indexOf("MSIE"))!=-1) {
+                    browserName = "Microsoft Internet Explorer";
+                    fullVersion = nAgent.substring(verOffset+5);
+                }
+                // In Chrome, the true version is after "Chrome" 
+                else if ((verOffset=nAgent.indexOf("Chrome"))!=-1) {
+                    browserName = "Chrome";
+                    fullVersion = nAgent.substring(verOffset+7);
+                }
+                // In Safari, the true version is after "Safari" or after "Version" 
+                else if ((verOffset=nAgent.indexOf("Safari"))!=-1) {
+                    browserName = "Safari";
+                    fullVersion = nAgent.substring(verOffset+7);
+                    if ((verOffset=nAgent.indexOf("Version"))!=-1) {
+                        fullVersion = nAgent.substring(verOffset+8);
+                    }
+                }
+                // In Firefox, the true version is after "Firefox" 
+                else if ((verOffset=nAgent.indexOf("Firefox"))!=-1) {
+                    browserName = "Firefox";
+                    fullVersion = nAgent.substring(verOffset+8);
+                }
+                // In most other browsers, "name/version" is at the end of userAgent 
+                else if ( (nameOffset=nAgent.lastIndexOf(' ')+1) < (verOffset=nAgent.lastIndexOf('/')) ) {
+                    browserName = nAgent.substring(nameOffset,verOffset);
+                    fullVersion = nAgent.substring(verOffset+1);
+                    if (browserName.toLowerCase()==browserName.toUpperCase()) {
+                        browserName = navigator.appName;
+                    }
+                }
+                // Trim the fullVersion string at semicolon/space if present
+                if ((ix=fullVersion.indexOf(";"))!=-1) {
+                fullVersion=fullVersion.substring(0,ix);
+                }
+                if ((ix=fullVersion.indexOf(" "))!=-1) {
+                fullVersion=fullVersion.substring(0,ix);
+                }
+
+                majorVersion = parseInt(''+fullVersion,10);
+                if (isNaN(majorVersion)) {
+                    fullVersion  = ''+parseFloat(navigator.appVersion); 
+                    majorVersion = parseInt(navigator.appVersion,10);
+                }
+
+                return {all: '' +'Browser name  = '+browserName +'Full version  = '+fullVersion + 'Major version = '+majorVersion
+                                +'navigator.appName = '+navigator.appName  +'navigator.userAgent = '+navigator.userAgent+'<br>',
+                        name: browserName,
+                        fullVersion: fullVersion
+                        };
+            }
+
+            const browserInfo = browserDetailedInfo();
+
+            let counter = new Counter();
+            
+            //Perfomance Timing API
+            //redirect(Start/End) - подсчет HTTP-редиректа
+            //domLoading - HTML-parser starts work
+            //domInteractive - HTML-parser ends work with basic-document
+            //domContentLoadedEventStart - moment before событие, that starts after all scripts, которые должны исполниться сразу после парсинга, done.
+            //domContentLoadedEventEnd - Момент сразу после исполнения всех скриптов
+            //domComplete - Парсер HTML завершил работу над основным документом, срабатывает событие readystatechange
+    
+            counter.init('D8F28E50-3339-11EC-9EDF-9F95580795B1', String(Math.random()).substr(2, 12), 'Home-page test');
+            counter.setAdditionalParams({
+                env: 'production',
+                platform: 'desktop',
+                operationSystem: 'Windows',
+                browser: browserInfo.name,
+                browserVersion: browserInfo.fullVersion,
+                browserDetailInfo: browserInfo.all,
+            });
+
+    //Timing resolve
+            let time = window.performance.timing;
+            
+            //Setting connection with Server
+            const dns = time.domainLookupEnd - time.domainLookupStart;
+            const tcp = time.connectEnd - time.connectStart;
+            const ssl = time.requestStart - time.secureConnectionStart;
+            console.log('DNS: ', dns, 'TCP :', tcp, 'SSL :', ssl);
+
+            //First steps of getting data from Server
+            const ttfb = time.responseStart - time.navigationStart;             //Time to First Byte
+            console.log('ttfb - ', ttfb);
+
+            //Page load time
+            const pageLoadTime = time.loadEventStart - time.navigationStart;
+            console.log('pageLoadTime - ', pageLoadTime);
+
+            //Compression
+            const compressionSavings = 1 - (time.transferSize / time.decodedBodySize);
+            console.log('Compression :', compressionSavings);
+    
+            counter.send('DNS', dns);
+            counter.send('TCP', tcp);
+            counter.send('SSL', ssl);
+            counter.send('TtFB', ttfb);
+            counter.send('PageLoadTime', pageLoadTime);
+            counter.send('CompressionSavings', compressionSavings);
+        </script>
+    </body>
+</html>

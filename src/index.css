@@ -1,0 +1,64 @@
+html {
+    height: 100%;                 /*For centralize settings block on main-page*/
+}
+  
+body {
+    margin: 0 100px;
+    align-items: center;
+    font-family: 'YS Text';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;   
+}
+
+header {
+    font-size: 17px;
+    text-align: center;
+}
+
+.navigation-menu {
+    background-color: antiquewhite;
+}
+
+.original-button {
+    padding: 0 20px;
+    text-align: center;
+    border: 2px solid brown;
+    line-height: 20px;
+    border-radius: 4px;
+    min-width: 100px;
+}
+.original-button:hover {
+    background-color: coral;
+    cursor: pointer;
+}
+.original-button:focus {
+    background-color: gray;
+}
+
+.disabled-button, .disabled-button:hover, .disabled-button:focus {
+    opacity: 0.75;
+    background-color: gainsboro;
+}
+
+h2, h3 {
+    font-size: 19px;
+    text-align: center;
+}
+
+.page-information p {
+    font-style: italic;
+}
+
+.main-block {
+    text-indent: 20px;
+    text-align: justify;
+}
+
+@media (max-width: 600px) {
+    body {
+        margin: 0 50px;
+    }
+}
