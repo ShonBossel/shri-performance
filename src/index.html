@@ -41,7 +41,6 @@
 
         <script src="../send.js"></script>
         <script>
-
             function browserDetailedInfo() {
                 let nVer = navigator.appVersion;
                 let nAgent = navigator.userAgent;
@@ -105,6 +104,9 @@
 
                 // mobile version
                 let mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
+                if (!mobile) {
+                    mobile = false;
+                }
 
                 return {all: '' +'Browser name  = '+browserName +'Full version  = '+fullVersion + 'Major version = '+majorVersion
                                 +'navigator.appName = '+navigator.appName  +'navigator.userAgent = '+navigator.userAgent+'<br>',
@@ -115,7 +117,6 @@
             }
 
             function systemInfo() {
-                // Operating system
                 let os = '';
                 const clientStrings = [
                     {s:'Windows 3.11', r:/Win16/},
@@ -158,32 +159,33 @@
             const browserInfo = browserDetailedInfo();
 
             let counter = new Counter();
-            
-            //Perfomance Timing API
-            //redirect(Start/End) - подсчет HTTP-редиректа
-            //domLoading - HTML-parser starts work
-            //domInteractive - HTML-parser ends work with basic-document
-            //domContentLoadedEventStart - moment before событие, that starts after all scripts, которые должны исполниться сразу после парсинга, done.
-            //domContentLoadedEventEnd - Момент сразу после исполнения всех скриптов
-            //domComplete - Парсер HTML завершил работу над основным документом, срабатывает событие readystatechange
     
-            counter.init('D8F28E50-3339-11EC-9EDF-9F95580795B1', String(Math.random()).substr(2, 12), 'Home-page test');
+            counter.init('D8F28E50-3339-11EC-9EDF-9F93000295B1', String(Math.random()).substr(2, 12), 'Home-page test');
             counter.setAdditionalParams({
                 env: 'production',
                 platform: navigator.platform,
-                operationSystem: systemInfo(),
+                operatingSystem: systemInfo(),
                 browser: browserInfo.name,
                 browserVersion: browserInfo.fullVersion,
                 browserDetailInfo: browserInfo.all,
-                browserCookie: (navigator.cookieEnabled) ? true : false
+                browserCookie: (navigator.cookieEnabled) ? true : false,
+            //For Session
+                user: 'User',
+                sessionId: 'User-pochemypotomy123',
             });
 
-            console.log('OS - ', systemInfo());
 
     //Timing resolve
             let time = window.performance.timing;
             
-            //Setting connection with Server
+    //Perfomance Timing API
+        //redirect(Start/End) - подсчет HTTP-редиректа
+        //domLoading - HTML-parser starts work
+        //domInteractive - HTML-parser ends work with basic-document
+        //domContentLoadedEventStart - moment before событие, that starts after all scripts, которые должны исполниться сразу после парсинга, done.
+        //domContentLoadedEventEnd - Момент сразу после исполнения всех скриптов
+        //domComplete - Парсер HTML завершил работу над основным документом, срабатывает событие readystatechange    
+        //Setting connection with Server
             const dns = time.domainLookupEnd - time.domainLookupStart;
             const tcp = time.connectEnd - time.connectStart;
             const ssl = time.requestStart - time.secureConnectionStart;
@@ -207,6 +209,22 @@
             counter.send('TtFB', ttfb);
             counter.send('PageLoadTime', pageLoadTime);
             counter.send('CompressionSavings', compressionSavings);
+
+    //Paint Timing API
+        //First paint: when user sees anything at all that’s not the browser’s default background.
+        //First contentful paint: when user sees something “contentful”, like an image or text (DIV with a background color isn't “contentful”)
+            // if (window.performance) {
+            //     let performance = window.performance;
+            //     let performanceEntries = performance.getEntriesByType('img');
+            //     console.log('performanceEntries - ', performanceEntries);
+            //     performanceEntries.forEach( (performanceEntry, i, entries) => {
+            //         console.log("The time to " + performanceEntry.name + " was " + performanceEntry.startTime + " milliseconds.");
+            //     });
+            // } else {
+            //         console.log("Performance timing isn't supported in this browser.");
+            // }
+
+            // console.log(paintEntries);
         </script>
     </body>
 </html>

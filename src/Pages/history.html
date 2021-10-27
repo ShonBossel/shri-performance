@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
         <title>Test Site - History page</title>
+        <link REL="import" href="../index.html">
         <link rel="stylesheet" href="../index.css">
         <link rel="stylesheet" href="history.css">
     </head>
@@ -28,22 +29,95 @@
         <h2>Освоение космоса</h2>
         <p>Освоение космоса — освоение (обживание, <a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C" title="Промышленность">промышленное</a> использование) человеком космического пространства и небесных тел с помощью космических аппаратов. Исследования космоса ведутся как с помощью пилотируемых космических полётов, так и с помощью автоматических космических аппаратов.</p>
         <p>Техническому исследованию космоса предшествовало развитие <a href="https://ru.wikipedia.org/wiki/%D0%90%D1%81%D1%82%D1%80%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F" title="Астрономия">астрономии</a> и создание крупных и относительно эффективных ракет в первой половине XX века. Началом эпохи освоения космоса можно считать запуск первого искусственного спутника Земли — «<a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA-1" title="Спутник-1">Спутника-1</a>», запущенного Советским Союзом 4 октября 1957 г.</p>
+        <!-- <script>
+            var startTime = new Date().getTime();
+            function doneLoading() {
+                var loadtime = new Date().getTime() - startTime;
+                console.log("Image took " + loadtime + "ms to load");
+            };    
+            </script> -->
+        <script>
+            performance.mark('imgDownloadStart');
+        </script>
         <img class="usual-images" src="../../public/images/photo-of-the-Moon-by-Armstrong.jpg" title="First photo of the Moon taken by Nill Armstrong" alt="Photo of the Moon" width="300" height="300" />
-        
+        <script>
+            performance.mark('imgDownloadEnd');
+        </script>
         
         <script src="../../send.js"></script>
+        <script src="../plugins/getSystemInfo.js"></script>
+        <script src="../plugins/getBrowserInfo.js"></script>
         <script>
             let counter = new Counter();
     
-            counter.init('D8F28E50-3339-11EC-9EDF-9F95580795B1', String(Math.random()).substr(2, 12), 'send test');
+            counter.init('D8F28E50-3339-11EC-9EDF-9F93000295B1', String(Math.random()).substr(2, 12), 'History-page test');
             counter.setAdditionalParams({
                 env: 'production',
-                platform: 'desktop',
-                browser: 'chrome'
+                platform: navigator.platform,
+                browser: navigator.userAgent,
+                browserCookie: (navigator.cookieEnabled) ? true : false
             });
+
+
+            let time = window.performance.timing;
+        //Perfomance Timing API
+            
+            //Setting connection with Server
+            const dns = time.domainLookupEnd - time.domainLookupStart;
+            const tcp = time.connectEnd - time.connectStart;
+            const ssl = time.requestStart - time.secureConnectionStart;
+            console.log('DNS: ', dns, 'TCP :', tcp, 'SSL :', ssl);
+
+            //First steps of getting data from Server
+            const ttfb = time.responseStart - time.navigationStart;             //Time to First Byte
+            console.log('ttfb - ', ttfb);
+
+            //Page load time
+            const pageLoadTime = time.loadEventStart - time.navigationStart;
+            console.log('pageLoadTime - ', pageLoadTime);
+
+            //Compression
+            const compressionSavings = 1 - (time.transferSize / time.decodedBodySize);
+            console.log('Compression :', compressionSavings);
     
-            counter.send('Connect', performance.timing.connectEnd - performance.timing.connectStart);
-            counter.send('ttfb', performance.timing.responseEnd - performance.timing.requestStart);
+            counter.send('DNS', dns);
+            counter.send('TCP', tcp);
+            counter.send('SSL', ssl);
+            counter.send('TtFB', ttfb);
+            counter.send('PageLoadTime', pageLoadTime);
+            counter.send('CompressionSavings', compressionSavings);
+
+        //Paint Timing API
+            performance.mark('beginForLoop');
+            for(let i = 0; i < 10000; i++) {
+                //HERE SHOULD BE SOME HEAVY FUNCTION!!!
+            }
+            performance.mark('endForLoop');
+            performance.measure('measureForLoop','beginForLoop', 'endForLoop');
+            console.log('Loop executing: ', performance.getEntriesByName('measureForLoop')[0].duration);
+
+            performance.measure('measureForImage','imgDownloadStart', 'imgDownloadEnd');
+            console.log('Image download: ', performance.getEntriesByName('measureForImage')[0].duration);
+
+        //Images downloading
+        // (function checkImageDownloading() {
+        //     if (window.performance) {
+        //         let resourceList = window.performance.getEntriesByType('resource');
+        //         let textnode = '', totalTimeTaken = 0;
+                
+        //         for (i = 0; i < resourceList.length; i++) {
+        //             if (resourceList[i].initiatorType == "img") {
+        //                 totalTimeTaken += resourceList[i].responseEnd - resourceList[i].responseStart;
+        //                 textnode = "Image_" + i + ": " + (resourceList[i].responseEnd - resourceList[i].responseStart).toFixed(2)+ " ms";
+        //                 console.log(textnode);
+        //             }
+        //         }
+        //         console.log('Total time taken for downloading images: ', totalTimeTaken.toFixed(4), 'ms');
+        //     } else {
+        //         console.log('window.performance.getEntriesByName not available');
+        //     }
+        // })();
+            
         </script>
     </body>
 </html>

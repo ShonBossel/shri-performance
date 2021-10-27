@@ -1,4 +1,4 @@
-export function browserDetailedInfo() {
+function getbrowserInfo() {
     let nVer = navigator.appVersion;
     let nAgent = navigator.userAgent;
     let browserName  = navigator.appName;
@@ -59,11 +59,23 @@ export function browserDetailedInfo() {
         majorVersion = parseInt(navigator.appVersion,10);
     }
 
-    return (''
-        +'Browser name  = '+browserName+'<br>'
-        +'Full version  = '+fullVersion+'<br>'
-        +'Major version = '+majorVersion+'<br>'
-        +'navigator.appName = '+navigator.appName+'<br>'
-        +'navigator.userAgent = '+navigator.userAgent+'<br>'
-    );
+    // mobile version
+    let mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
+    if (!mobile) {
+        mobile = false;
+    }
+
+    return {all: '' +'Browser name  = '+browserName +'Full version  = '+fullVersion + 'Major version = '+majorVersion
+                    +'navigator.appName = '+navigator.appName  +'navigator.userAgent = '+navigator.userAgent+'<br>',
+            name: browserName,
+            fullVersion: fullVersion,
+            mobileVersion: mobile
+            };
 }
+
+const browser = getbrowserInfo();
+
+console.log('Browser Info:');
+console.log('Browser: ', browser.name, ';');
+console.log('Version: ', browser.fullVersion, ';');
+console.log('Mobile: ', browser.mobileVersion, '.')
