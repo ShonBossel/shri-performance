@@ -40,6 +40,7 @@ function showMetricByPeriod(data, page, startDate, endDate) {
 //This function shows metric for few days as total values (in one table)
 function showAllMetricByPeriod(data, page, startDate, endDate) {
 	console.log(`Total metrics for few days from ${startDate} till ${endDate}:`);
+	console.log('Perfomance Timing Metrics:');
 	let table = {};
 	
 	table.dns = addMetricByFewDays(data, page, 'DNS', startDate, endDate);
@@ -50,6 +51,9 @@ function showAllMetricByPeriod(data, page, startDate, endDate) {
 	table.compressionSavings = addMetricByFewDays(data, page, 'CompressionSavings', startDate, endDate);
 
 	console.table(table);
+
+	console.log('Paint Timing Metrics:');
+	table = {};
 }
 
 // show user session
@@ -154,9 +158,10 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9300
 		
 		// добавить свои сценарии, реализовать функции выше
 		console.log('------------------------------------');
+//This will show metrics data in each table for each day inside interval from 25.10.21 till 27.10.21
+		showMetricByPeriod(data, 'send test', '2021-10-25', '2021-10-27');
+//This will show metrics data in one total table for all days inside interval from 25.10.21 till 27.10.21
+		showAllMetricByPeriod(data, 'send test', '2021-10-25', '2021-10-27');
+//This will show netrics data for "User" with id "User-pochemypotomy123" for 27.10.21
 		showSession(data, '2021-10-27', 'User', 'User-pochemypotomy123');
-	//	showMetricByPeriod(data, 'send test', '2021-10-24', '2021-10-27');
-
-
-		console.log(addDays('2021-10-27', 5));
 	});

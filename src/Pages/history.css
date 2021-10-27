@@ -1,0 +1,19 @@
+body {
+    text-align: justify;
+}
+body a {
+    text-decoration: none;
+}
+
+body h2 {
+    border-bottom: 1px solid gainsboro;
+}
+
+body h3 {
+    text-align: left;
+}
+
+.usual-images {
+    float: right;
+    margin-left: 10px;
+}
