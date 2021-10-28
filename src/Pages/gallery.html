@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon" href="../../public/favicon.ico" type="image/x-icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="robots" content="index" />           <!--Letting searching robots (Yandex & Google) index pages-->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="description" content="Web site for Perfomance-tests" />
+        <meta name="keywords" content="Perfomance, tests, optimization, metrics, Gallery-page, images" />
+    
+        <title>Perfomance test Site - Gallery Page</title>
+        <link rel="stylesheet" href="../index.css">
+        <link rel="stylesheet" href="gallery.css">
+    </head>
+    
+    <body>
+        <header>
+            <p elementtiming="first-header-text">Gallery Page</p>
+            <div class="navigation-menu">
+                <button class="original-button"><a href="../index.html">History</a></button>
+                <button class="original-button"><a href="./history.html">History</a></button>
+                <button class="original-button disabled-button" disabled>Gallery</button>
+                <button class="original-button"><a href="./about.html">About</a></button>
+            </div>
+        </header>
+        
+        <h3  elementtiming="first-content-text">Данная страница содержит в себе большой объем весомых картинок, которые отображаются после нажатия на кнопку. Результаты ее тестирования должны быть со значимыми цифрами:).</h3>
+        <h2>Gallery of images</h2>
+        <div class="main-block">
+            <div class="main-block-video">
+                <p>Some Video</p>
+                <iframe src="https://www.youtube.com/embed/BSl6WiwCtlg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="main-block-images">
+                <button class="main-block-images-but">CLICK ME...CLICK!!!!!</button>
+                <div class="main-block-images-block">
+                    <!--This block used for images downloading-->
+                </div>
+            </div>
+        </div>
+        <p class="footer-end" elementtiming="last-footer-text">END</p>
+
+        <script src="../../send.js"></script>
+        <script src="../plugins/getSystemInfo.js"></script>
+        <script src="../plugins/getBrowserInfo.js"></script>
+        <script>
+            const browserInfo = (new BrowserInfo()).getBrowserInfo();
+            const operatingSystem = (new SystemInfo()).getSystemInfo();
+
+            let counter = new Counter();
+    
+            counter.init('D8F28E50-3339-11EC-9EDF-9F93055895B1', String(Math.random()).substr(2, 12), 'Home-page test');
+            counter.setAdditionalParams({
+                env: 'production',
+                platform: navigator.platform,
+                operatingSystem: operatingSystem,
+                browser: browserInfo.browserName,
+                browserVersion: browserInfo.browserFullVersion,
+                browserDetailInfo: browserInfo.browserDetailInfo,
+                browserCookie: browserInfo.browserCookie,
+                mobile: browserInfo.mobile,
+            //For Session
+                user: 'User',
+                sessionId: 'User-pochemypotomy123'
+            });
+
+    //Timing resolve
+            let time = window.performance.timing;
+            console.log('Operation System:', operatingSystem);
+            console.log('Browser:', browserInfo);
+            
+    //Perfomance & Navigation Timing API   
+        //Setting connection with Server
+            const dns = (time.domainLookupEnd - time.domainLookupStart).toFixed(4);
+            const tcp = (time.connectEnd - time.connectStart).toFixed(4);
+            const ssl = (time.requestStart - time.secureConnectionStart).toFixed(4);
+            console.log('DNS: ', dns, 'TCP :', tcp, 'SSL :', ssl);
+
+        //First steps of getting data from Server
+            const ttfb = (time.responseStart - time.navigationStart).toFixed(4);             //Time to First Byte
+            console.log('ttfb - ', ttfb);
+
+        //Page load time DOESN'T WORK!!!! .domComlete returns 0!!!!!!!!!!!!! .duration - the same!!!
+            const pageLoadTime = (performance.getEntriesByType("navigation")[0].domComplete - performance.getEntriesByType("navigation")[0].startTime).toFixed(4);
+            console.log('pageLoadTime - ', pageLoadTime);
+
+        //Compression
+            const compressionSavings = 1 - (performance.getEntriesByType("navigation")[0].decodedBodySize / performance.getEntriesByType("navigation")[0].encodedBodySize) | 'none';
+            console.log('Compression :', compressionSavings);
+    
+            counter.send('DNS', dns);
+            counter.send('TCP', tcp);
+            counter.send('SSL', ssl);
+            counter.send('TtFB', ttfb);
+            counter.send('PageLoadTime', pageLoadTime);
+            counter.send('Compression', compressionSavings);
+
+    //Paint Timing API
+        //First paint: when user sees anything at all that’s not the browser’s default background.
+        //First contentful paint: when user sees something “contentful”, like an image or text (DIV with a background color isn't “contentful”)
+        
+    // This function returns timings of rendering some elements of page (first in Header, first in Content and last in Footer)    
+        (function getContentfulTimings() {
+            const observer = new PerformanceObserver((list) => {
+                let entries = list.getEntriesByName('text-paint');
+                for(let i = 0; i < entries.length; i++) {
+                    if(entries[i].identifier === 'first-header-text') {
+                        counter.send('FirstContentfulHeader', (entries[i].renderTime).toFixed(4));
+                        continue;
+                    }
+                    else if(entries[i].identifier === 'first-content-text') {
+                        counter.send('FirstContentfulContent', (entries[i].renderTime).toFixed(4));
+                        continue;
+                    }
+                    else {
+                        counter.send('LastContentfulFooter', (entries[i].renderTime).toFixed(4));
+                    }
+                }
+            });
+            observer.observe({entryTypes: ["element"]});
+        })();
+        </script>
+    </body>
+</html>

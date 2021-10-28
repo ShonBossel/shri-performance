@@ -1,0 +1,19 @@
+.main-block-video, iframe {
+    margin: 20px auto;
+}
+
+iframe {
+    display: block;
+    width: 100vw;
+    height: 50vh;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    box-sizing: border-box;
+}
+
+.main-block-images-but {
+    display: block;
+    margin: 0 auto;
+}
