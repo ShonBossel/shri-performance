@@ -41,7 +41,7 @@ function showMetricByPeriod(data, page, startDate, endDate) {
 function showAllMetricByPeriod(data, page, startDate, endDate) {
 	console.log(`Total metrics for few days from ${startDate} till ${endDate}:`);
 
-	console.log('Perfomance Timing Metrics:');
+	console.log('Perfomance & Navigation Timing Metrics:');
 	let table = {};	
 	table.dns = addMetricByFewDays(data, page, 'DNS', startDate, endDate);
 	table.tcp = addMetricByFewDays(data, page, 'TCP', startDate, endDate);
@@ -54,8 +54,14 @@ function showAllMetricByPeriod(data, page, startDate, endDate) {
 
 	console.log('Paint Timing Metrics:');
 	table = {};
-	table.fch = addMetricByFewDays(data, page, 'FirstContentful-Header', startDate, endDate);
-	table.fcc = addMetricByFewDays(data, page, 'FirstContentful-Content', startDate, endDate);
+	table.lex = addMetricByFewDays(data, page, 'LoopExecuting', startDate, endDate);
+	table.sid = addMetricByFewDays(data, page, 'StaticImageLoad', startDate, endDate);
+	table.fch = addMetricByFewDays(data, page, 'FirstContentfulHeader', startDate, endDate);
+	table.fcc = addMetricByFewDays(data, page, 'FirstContentfulContent', startDate, endDate);
+	table.lcf = addMetricByFewDays(data, page, 'LastContentfulFooter', startDate, endDate);
+	table.im1 = addMetricByFewDays(data, page, 'Image1Download', startDate, endDate);
+	table.im2 = addMetricByFewDays(data, page, 'Image2Download', startDate, endDate);
+	table.im3 = addMetricByFewDays(data, page, 'Image3Download', startDate, endDate);
 	
 	console.table(table);
 }
@@ -83,8 +89,9 @@ function showSession(data, date, user, id/* = true*/) {
 
 // This function compares metric in different sclices and shows info of each browser in each table
 function compareMetric(data, page, date) {
-	console.log('Comparsion of metrics in different browsers:');
-	let browsers = data.map(item => item.additional.browser);
+	console.log('Comparsion of metrics of different browsers:');
+	//CHANGE THIS!!!! Not needed to view one type of browser for few times
+	let browsers = [...new Set(data.map(item => item.additional.browser))];
 
 	for (let browser of browsers) {
 		console.log(`Metrics information in browser "${browser}":`);
@@ -92,15 +99,33 @@ function compareMetric(data, page, date) {
 	}
 }
 
-// Any other scenaries, that you find usefull
+// This function compares metric of different platform types and shows info in one table
+function comparePlatformTypeMetric(data, page, date) {
+	console.log('Comparsion of metrics of different platform types:')
+	let platformTypes = [...new Set(data.map(item => item.additional.mobile? 'mobile' : 'desktop'))];
+	
+	for (let platformType of platformTypes) {
+		console.log(`Metrics information for ${platformType}-version:`);
+		calcMetricsByDate(data, page, date, platformType);
+	}
+}
 
 
 // Example
 // This function adds metric for chosen date
 function addMetricByDate(data, page, name, date, browser/* = true*/) {
-	let sampleData = data
+	let sampleData;
+	if(browser === 'desktop' || browser === 'mobile') {
+		const platformType = browser;
+		sampleData = data
+					.filter(item => item.page == page && item.name == name && item.date == date && platformType == item.additional.mobile)
+					.map(item => item.value);
+	}
+	else {
+		sampleData = data
 					.filter(item => item.page == page && item.name == name && item.date == date && (browser ? item.additional.browser==browser: true))
 					.map(item => item.value);
+	}
 
 	let result = {};
 
@@ -134,7 +159,7 @@ function calcMetricsByDate(data, page, date, browser) {
 	console.log(`All metrics for ${date}:`);
 
 	let table = {};
-	console.log('Perfomance Timing Metrics:');
+	console.log('Perfomance & Navigation Timing Metrics:');
 	table.dns = addMetricByDate(data, page, 'DNS', date, browser);
 	table.tcp = addMetricByDate(data, page, 'TCP', date, browser);
 	table.ssl = addMetricByDate(data, page, 'SSL', date, browser);
@@ -146,27 +171,58 @@ function calcMetricsByDate(data, page, date, browser) {
 
 	table = {};
 	console.log('Paint Timing Metrics:');
-	table.fch = addMetricByDate(data, page, 'FirstContentful-Header', date, browser);
-	table.fcc = addMetricByDate(data, page, 'FirstContentful-Content', date, browser);
+	table.lex = addMetricByDate(data, page, 'LoopExecuting', date, browser);
+	table.sid = addMetricByDate(data, page, 'StaticImageLoad', date, browser);
+	table.fch = addMetricByDate(data, page, 'FirstContentfulHeader', date, browser);
+	table.fcc = addMetricByDate(data, page, 'FirstContentfulContent', date, browser);
+	table.lcf = addMetricByDate(data, page, 'LastContentfulFooter', date, browser);
+	table.im1 = addMetricByDate(data, page, 'Image1Download', date, browser);
+	table.im2 = addMetricByDate(data, page, 'Image2Download', date, browser);
+	table.im3 = addMetricByDate(data, page, 'Image3Download', date, browser);	
 
 	console.table(table);
 };
 
-fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F93000295B1')
+fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F93055895B1')
 	.then(res => res.json())
 	.then(result => {
 		let data = prepareData(result);
 
-		calcMetricsByDate(data, 'Home-page test', '2021-10-27');
-		
-		// добавить свои сценарии, реализовать функции выше
-		console.log('------------------------------------');
-//This will show metrics data in each table for each day inside interval from 25.10.21 till 27.10.21
-		showMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-27');
-//This will show metrics data in one total table for all days inside interval from 25.10.21 till 27.10.21
-		showAllMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-27');
-//This will show metrics data for "User" with id "User-pochemypotomy123" for 27.10.21
-		showSession(data, '2021-10-27', 'User', 'User-pochemypotomy123');
-//This will show comparsion metrics for users browsers each in separate table
-		compareMetric(data, 'Home-page test', '2021-10-25');
+	//Metrics for Home-page
+		calcMetricsByDate(data, 'Home-page test', '2021-10-29');
+		//console.log('------------------------------------');
+//This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
+		//showMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
+		//showAllMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show metrics data for "User" with id "User-pochemypotomy123" for 28.10.21
+		//showSession(data, '2021-10-28', 'User', 'User-pochemypotomy123');
+		//console.log('------------------------------------');
+//This will show comparsion metrics for users browsers each in separate table for 28.10.21
+		//compareMetric(data, 'Home-page test', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show comparsion metrics for different types of platform (mobile & desktop)
+		//comparePlatformTypeMetric(data, "Home-page test", '2021-10-28');
+		//console.log('************************************');
+
+		//Metrics for History-page
+		calcMetricsByDate(data, 'History-page test', '2021-10-29');
+		//console.log('------------------------------------');
+//This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
+		//showMetricByPeriod(data, 'History-page test', '2021-10-25', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
+		//showAllMetricByPeriod(data, 'History-page test', '2021-10-25', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show metrics data for "User" with id "User-pochemypotomy123" for 28.10.21
+		//showSession(data, '2021-10-28', 'User', 'User-pochemypotomy123');
+		//console.log('------------------------------------');
+//This will show comparsion metrics for users browsers each in separate table for 28.10.21
+		//compareMetric(data, 'History-page test', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show comparsion metrics for different types of platform (mobile & desktop)
+		//comparePlatformTypeMetric(data, "History-page test", '2021-10-28');
+		//console.log('************************************');
 	});

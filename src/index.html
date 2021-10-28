@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <meta name="description" content="Web site for Perfomance-tests" />
-        <meta name="keywords" content="Perfomance, tests, optimization, metrics" />
+        <meta name="keywords" content="Perfomance, tests, optimization, metrics, Home-page" />
     
         <title>Perfomance test Site</title>
         <link rel="stylesheet" href="index.css">
@@ -19,13 +19,11 @@
             <div class="navigation-menu">
                 <button class="original-button disabled-button" disabled>History</button>
                 <button class="original-button"><a href="Pages/history.html">History</a></button>
-                <button class="original-button"><a href="Pages/contacts.html">Contacts</a></button>
+                <button class="original-button"><a href="Pages/gallery.html">Gallery</a></button>
                 <button class="original-button"><a href="Pages/about.html">About</a></button>
             </div>
         </header>
         
-        <!-- On this page will be collected next metric information:
-        *  -->
         <h3  elementtiming="first-content-text">Данная страница содержит в себе немного информации и действий, ее можно отнести к разряду "легких". Результаты ее тестирования не должны выдавать плохих результатов.</h3>
         <span class="page-information"><p>В ней используется 1 вариант шрифта, нет картинок, анимаций и т.д. Файл стилей имеет небольшой размер.</p></span>
         <h2>Информационный текст для главной страницы</h2>
@@ -38,168 +36,53 @@
             <p>Пусть понятие «продающий текст» не вводит вас в заблуждение: этот формат совсем не обязательно должен что-то нахваливать и навязчиво предлагать. Хотя, конечно, бывает и такое. Скорее, такой вид контента призван дать понять читателю, что главная страница сайта полностью соответствует его ожиданиям. Посетителю дается заряд мотивации для посещения других страниц ресурса. Обычно продающие тексты на главных страницах размещают интернет-магазины, сайты услуг и другие площадки, стремящиеся максимально быстро приковать внимание читателя к своему предложению.</p>
             <p>Продающий текст может быть оптимизирован. Например, главная страница этого сайта призвана не только красиво подавать услуги, но и бороться за высокие места в выдаче. Что, кстати, у нее отлично получается.</p>
         </div>
+        <p class="footer-end" elementtiming="last-footer-text">END</p>
         <script src="../send.js"></script>
+        <script src="plugins/getSystemInfo.js"></script>
+        <script src="plugins/getBrowserInfo.js"></script>
         <script>
-            function browserDetailedInfo() {
-                let nVer = navigator.appVersion;
-                let nAgent = navigator.userAgent;
-                let browserName  = navigator.appName;
-                let fullVersion  = ''+parseFloat(navigator.appVersion); 
-                let majorVersion = parseInt(navigator.appVersion,10);
-                let nameOffset, verOffset, ix;
-
-                // In Opera, the true version is after "Opera" or after "Version"
-                if ((verOffset=nAgent.indexOf("Opera"))!=-1) {
-                    browserName = "Opera";
-                    fullVersion = nAgent.substring(verOffset+6);
-                    if ((verOffset=nAgent.indexOf("Version"))!=-1) {
-                        fullVersion = nAgent.substring(verOffset+8);
-                    }
-                }
-                // In MSIE, the true version is after "MSIE" in userAgent
-                else if ((verOffset=nAgent.indexOf("MSIE"))!=-1) {
-                    browserName = "Microsoft Internet Explorer";
-                    fullVersion = nAgent.substring(verOffset+5);
-                }
-                // In Chrome, the true version is after "Chrome" 
-                else if ((verOffset=nAgent.indexOf("Chrome"))!=-1) {
-                    browserName = "Chrome";
-                    fullVersion = nAgent.substring(verOffset+7);
-                }
-                // In Safari, the true version is after "Safari" or after "Version" 
-                else if ((verOffset=nAgent.indexOf("Safari"))!=-1) {
-                    browserName = "Safari";
-                    fullVersion = nAgent.substring(verOffset+7);
-                    if ((verOffset=nAgent.indexOf("Version"))!=-1) {
-                        fullVersion = nAgent.substring(verOffset+8);
-                    }
-                }
-                // In Firefox, the true version is after "Firefox" 
-                else if ((verOffset=nAgent.indexOf("Firefox"))!=-1) {
-                    browserName = "Firefox";
-                    fullVersion = nAgent.substring(verOffset+8);
-                }
-                // In most other browsers, "name/version" is at the end of userAgent 
-                else if ( (nameOffset=nAgent.lastIndexOf(' ')+1) < (verOffset=nAgent.lastIndexOf('/')) ) {
-                    browserName = nAgent.substring(nameOffset,verOffset);
-                    fullVersion = nAgent.substring(verOffset+1);
-                    if (browserName.toLowerCase()==browserName.toUpperCase()) {
-                        browserName = navigator.appName;
-                    }
-                }
-                // Trim the fullVersion string at semicolon/space if present
-                if ((ix=fullVersion.indexOf(";"))!=-1) {
-                fullVersion=fullVersion.substring(0,ix);
-                }
-                if ((ix=fullVersion.indexOf(" "))!=-1) {
-                fullVersion=fullVersion.substring(0,ix);
-                }
-
-                majorVersion = parseInt(''+fullVersion,10);
-                if (isNaN(majorVersion)) {
-                    fullVersion  = ''+parseFloat(navigator.appVersion); 
-                    majorVersion = parseInt(navigator.appVersion,10);
-                }
-
-                // mobile version
-                let mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
-                if (!mobile) {
-                    mobile = false;
-                }
-
-                return {all: '' +'Browser name  = '+browserName +'Full version  = '+fullVersion + 'Major version = '+majorVersion
-                                +'navigator.appName = '+navigator.appName  +'navigator.userAgent = '+navigator.userAgent+'<br>',
-                        name: browserName,
-                        fullVersion: fullVersion,
-                        mobileVersion: mobile
-                        };
-            }
-
-            function systemInfo() {
-                let os = '';
-                const clientStrings = [
-                    {s:'Windows 3.11', r:/Win16/},
-                    {s:'Windows 95', r:/(Windows 95|Win95|Windows_95)/},
-                    {s:'Windows ME', r:/(Win 9x 4.90|Windows ME)/},
-                    {s:'Windows 98', r:/(Windows 98|Win98)/},
-                    {s:'Windows CE', r:/Windows CE/},
-                    {s:'Windows 2000', r:/(Windows NT 5.0|Windows 2000)/},
-                    {s:'Windows XP', r:/(Windows NT 5.1|Windows XP)/},
-                    {s:'Windows Server 2003', r:/Windows NT 5.2/},
-                    {s:'Windows Vista', r:/Windows NT 6.0/},
-                    {s:'Windows 7', r:/(Windows 7|Windows NT 6.1)/},
-                    {s:'Windows 8.1', r:/(Windows 8.1|Windows NT 6.3)/},
-                    {s:'Windows 8', r:/(Windows 8|Windows NT 6.2)/},
-                    {s:'Windows NT 4.0', r:/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/},
-                    {s:'Windows ME', r:/Windows ME/},
-                    {s:'Android', r:/Android/},
-                    {s:'Open BSD', r:/OpenBSD/},
-                    {s:'Sun OS', r:/SunOS/},
-                    {s:'Linux', r:/(Linux|X11)/},
-                    {s:'iOS', r:/(iPhone|iPad|iPod)/},
-                    {s:'Mac OS X', r:/Mac OS X/},
-                    {s:'Mac OS', r:/(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/},
-                    {s:'QNX', r:/QNX/},
-                    {s:'UNIX', r:/UNIX/},
-                    {s:'BeOS', r:/BeOS/},
-                    {s:'OS/2', r:/OS\/2/},
-                    {s:'Search Bot', r:/(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
-                ];
-                for (let id in clientStrings) {
-                    let cs = clientStrings[id];
-                    if (cs.r.test(navigator.userAgent)) {
-                        os = cs.s;
-                        break;
-                    }
-                }
-                return os;
-            }
-
-            const browserInfo = browserDetailedInfo();
+            const browserInfo = (new BrowserInfo()).getBrowserInfo();
+            const operatingSystem = (new SystemInfo()).getSystemInfo();
 
             let counter = new Counter();
     
-            counter.init('D8F28E50-3339-11EC-9EDF-9F93076295B1', String(Math.random()).substr(2, 12), 'Home-page test');
+            counter.init('D8F28E50-3339-11EC-9EDF-9F93055895B1', String(Math.random()).substr(2, 12), 'Home-page test');
             counter.setAdditionalParams({
                 env: 'production',
                 platform: navigator.platform,
-                operatingSystem: systemInfo(),
-                browser: browserInfo.name,
-                browserVersion: browserInfo.fullVersion,
-                browserDetailInfo: browserInfo.all,
-                browserCookie: (navigator.cookieEnabled) ? true : false,
+                operatingSystem: operatingSystem,
+                browser: browserInfo.browserName,
+                browserVersion: browserInfo.browserFullVersion,
+                browserDetailInfo: browserInfo.browserDetailInfo,
+                browserCookie: browserInfo.browserCookie,
+                mobile: browserInfo.mobile,
             //For Session
                 user: 'User',
-                sessionId: 'User-pochemypotomy123',
+                sessionId: 'User-pochemypotomy123'
             });
-
 
     //Timing resolve
             let time = window.performance.timing;
+            console.log('Operation System:', operatingSystem);
+            console.log('Browser:', browserInfo);
             
-    //Perfomance Timing API
-        //redirect(Start/End) - подсчет HTTP-редиректа
-        //domLoading - HTML-parser starts work
-        //domInteractive - HTML-parser ends work with basic-document
-        //domContentLoadedEventStart - moment before событие, that starts after all scripts, которые должны исполниться сразу после парсинга, done.
-        //domContentLoadedEventEnd - Момент сразу после исполнения всех скриптов
-        //domComplete - Парсер HTML завершил работу над основным документом, срабатывает событие readystatechange    
+    //Perfomance & Navigation Timing API   
         //Setting connection with Server
             const dns = (time.domainLookupEnd - time.domainLookupStart).toFixed(4);
             const tcp = (time.connectEnd - time.connectStart).toFixed(4);
             const ssl = (time.requestStart - time.secureConnectionStart).toFixed(4);
             console.log('DNS: ', dns, 'TCP :', tcp, 'SSL :', ssl);
 
-            //First steps of getting data from Server
+        //First steps of getting data from Server
             const ttfb = (time.responseStart - time.navigationStart).toFixed(4);             //Time to First Byte
             console.log('ttfb - ', ttfb);
 
-            //Page load time DOESN'T WORK!!!! domComlete return 0!!!!!!!!!!!!! .duration - the same!!!
-            const pageLoadTime = (time.loadEventStart - (performance.getEntriesByType("navigation")[0]).startTime).toFixed(4);
+        //Page load time DOESN'T WORK!!!! .domComlete returns 0!!!!!!!!!!!!! .duration - the same!!!
+            const pageLoadTime = (performance.getEntriesByType("navigation")[0].domComplete - performance.getEntriesByType("navigation")[0].startTime).toFixed(4);
             console.log('pageLoadTime - ', pageLoadTime);
 
-            //Compression
-            const compressionSavings = 1 - (time.transferSize / time.decodedBodySize);
+        //Compression
+            const compressionSavings = 1 - (performance.getEntriesByType("navigation")[0].decodedBodySize / performance.getEntriesByType("navigation")[0].encodedBodySize) | 'none';
             console.log('Compression :', compressionSavings);
     
             counter.send('DNS', dns);
@@ -207,27 +90,32 @@
             counter.send('SSL', ssl);
             counter.send('TtFB', ttfb);
             counter.send('PageLoadTime', pageLoadTime);
-            counter.send('CompressionSavings', compressionSavings);
+            counter.send('Compression', compressionSavings);
 
     //Paint Timing API
         //First paint: when user sees anything at all that’s not the browser’s default background.
         //First contentful paint: when user sees something “contentful”, like an image or text (DIV with a background color isn't “contentful”)
-        (function getFirstContentful() {
+        
+    // This function returns timings of rendering some elements of page (first in Header, first in Content and last in Footer)    
+        (function getContentfulTimings() {
             const observer = new PerformanceObserver((list) => {
-                let entries = list.getEntries();
-                console.log(entries);
+                let entries = list.getEntriesByName('text-paint');
                 for(let i = 0; i < entries.length; i++) {
                     if(entries[i].identifier === 'first-header-text') {
-                        counter.send('FirstContentful-Header', (entries[i].renderTime).toFixed(4));
+                        counter.send('FirstContentfulHeader', (entries[i].renderTime).toFixed(4));
+                        continue;
+                    }
+                    else if(entries[i].identifier === 'first-content-text') {
+                        counter.send('FirstContentfulContent', (entries[i].renderTime).toFixed(4));
                         continue;
                     }
                     else {
-                        counter.send('FirstContentful-Content', (entries[i].renderTime).toFixed(4));
+                        counter.send('LastContentfulFooter', (entries[i].renderTime).toFixed(4));
                     }
                 }
             });
             observer.observe({entryTypes: ["element"]});
-        })(); 
+        })();
         </script>
     </body>
 </html>

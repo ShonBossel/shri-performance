@@ -3,33 +3,35 @@
     <head>
         <link rel="icon" href="../../public/favicon.ico" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="robots" content="index" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="description" content="Web site for Perfomance-tests" />
+        <meta name="keywords" content="Perfomance, tests, optimization, metrics, History-page, space" />
     
         <title>Test Site - History page</title>
-        <link REL="import" href="../index.html">
         <link rel="stylesheet" href="../index.css">
         <link rel="stylesheet" href="history.css">
     </head>
     
     <body>
         <header>
-            <p>History Page</p>
+            <p elementtiming="first-header-text">History Page</p>
             <div class="navigation-menu">
                 <button class="original-button"><a href="../index.html">Home</a></button>
                 <button class="original-button disabled-button" disabled>History</a></button>
-                <button class="original-button"><a href="Pages/contacts.html">Contacts</a></button>
+                <button class="original-button"><a href="Pages/gallery.html">Gallery</a></button>
                 <button class="original-button"><a href="Pages/about.html">About</a></button>
             </div>
         </header>
         
-        <!-- On this page will be collected next metric information:
-        *  -->
-        <h3>Данная страница содержит в себе много текстово информации и картинок большого размера, ее можно отнести к разряду "тяжеловатых". Результаты ее тестирования должны показать задержки.</h3>
+        <h3 elementtiming="first-content-text">Данная страница содержит в себе много текстово информации и картинок большого размера, ее можно отнести к разряду "тяжеловатых". Результаты ее тестирования должны показать задержки.</h3>
         <span class="page-information"><p>Файл стилей имеет достаточный размер.</p></span>
 
         <script>
             performance.mark('imgDownloadStart');
         </script>
-        <img class="usual-images" src="../../public/images/photo-of-the-Moon-by-Armstrong.jpg" elementtiming="image" title="First photo of the Moon taken by Nill Armstrong" alt="Photo of the Moon" width="250" height="250" />
+        <img class="usual-images" src="../../public/images/photo-of-the-Moon-by-Armstrong.jpg" elementtiming="image-static" title="First photo of the Moon taken by Nill Armstrong" alt="Photo of the Moon" width="200" height="200" />
         <script>
             performance.mark('imgDownloadEnd');
         </script>
@@ -44,7 +46,7 @@
             <li>Космическая индустриализация — производство фармакологических препаратов, новых материалов для электронной, электротехнической, радиотехнических и других отраслей. В перспективе — разработка ресурсов <a href="https://ru.wikipedia.org/wiki/%D0%9B%D1%83%D0%BD%D0%B0" title="Луна">Луны</a>, других планет Солнечной системы и <a href="https://ru.wikipedia.org/wiki/%D0%90%D1%81%D1%82%D0%B5%D1%80%D0%BE%D0%B8%D0%B4" title="Астероид">астероидов</a>, удаление в космос отходов вредных промышленных производств. <a href="https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%81%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%82%D1%83%D1%80%D0%B8%D0%B7%D0%BC" title="Космический туризм">Космический туризм</a>.</li>
         </ul>
         <h2><a href="https://ru.wikipedia.org/wiki/%D0%A7%D0%B0%D1%81%D1%82%D0%BD%D0%B0%D1%8F_%D0%BA%D0%BE%D1%81%D0%BC%D0%BE%D0%BD%D0%B0%D0%B2%D1%82%D0%B8%D0%BA%D0%B0" class="mw-redirect" title="Частная космонавтика">Частная космонавтика</a></h2>
-        <img class="usual-images" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/SpaceX_Headquarters%2C_Hawthorne%2C_CA.jpg" elementtiming="image" title="SpaceX Headquarters, Hawthorne, CA" alt="SpaceX Headquaters" width="250" height="250" />
+        <img class="usual-images" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/SpaceX_Headquarters%2C_Hawthorne%2C_CA.jpg" elementtiming="image-download" title="SpaceX Headquarters, Hawthorne, CA" alt="SpaceX Headquaters" width="200" height="200" />
         <p>Частные космические компании:</p>
         <ul>
             <li><a href="https://ru.wikipedia.org/wiki/SpaceX" title="SpaceX">SpaceX</a> (основана в 2002 году) и её <a href="https://ru.wikipedia.org/wiki/%D0%A7%D0%B0%D1%81%D1%82%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D1%81%D0%BC%D0%BE%D0%B4%D1%80%D0%BE%D0%BC_SpaceX" title="Частный космодром SpaceX">космодром</a></li>
@@ -57,7 +59,7 @@
         <h2>Освоение в военных целях</h2>
         <p>Космические аппараты используются для спутниковой разведки, дальнего обнаружения баллистических ракет, связи, навигации. Создавались также системы противоспутникового оружия.</p>
         <h2>Важнейшие этапы освоения космоса</h2>
-        <img class="usual-images" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Sputnik_asm.jpg/1024px-Sputnik_asm.jpg" elementtiming="image" title="Sputnik-1" alt="The world's first artificial Earth satellite" width="250" height="250" />
+        <img class="usual-images" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Sputnik_asm.jpg/1024px-Sputnik_asm.jpg" elementtiming="image-download" title="Sputnik-1" alt="The world's first artificial Earth satellite" width="200" height="200" />
         <ul>
             <li>4 октября 1957 года — запуск первого искусственного спутника Земли «Спутник-1»</li>
             <li>12 апреля 1961 года — первый полёт человека в космос, Юрий Гагарин.</li>
@@ -69,49 +71,101 @@
             <li>21 июля 1969 года — первая высадка человека на Луну (Н. Армстронг) в рамках лунной экспедиции корабля «Аполлон-11», доставившей на Землю, в том числе и первые пробы лунного грунта.</li>
             <li>19 апреля 1971 года — запущена первая орбитальная станция «Салют-1».</li>
             <li>3 марта 1972 года — запуск первого КА, покинувшего впоследствии пределы Солнечной системы: «Пионер-10».</li>
-            <img class="usual-images" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Columbia_landing_on_Rogers_dry_lake.triddle.jpg/1280px-Columbia_landing_on_Rogers_dry_lake.triddle.jpg" elementtiming="image" title="Spase Shuttle Columbia" alt="Spase Shuttle Columbia" width="250" height="250" />
+            <img class="usual-images" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Columbia_landing_on_Rogers_dry_lake.triddle.jpg/1280px-Columbia_landing_on_Rogers_dry_lake.triddle.jpg" elementtiming="image-download" title="Spase Shuttle Columbia" alt="Spase Shuttle Columbia" width="200" height="200" />
             <li>12 апреля 1981 года — первый полёт первого многоразового транспортного космического корабля «Колумбия».</li>
             <li>20 февраля 1986 года — вывод на орбиту базового модуля орбитальной станции «Мир»</li>
             <li>15 ноября 1988 года — первый и единственный космический полёт МТКК «Буран» в автоматическом режиме.</li>
             <li>20 ноября 1998 года — запуск первого блока «Заря» Международной космической станции.</li>
         </ul>
         <h3>Полёты человека в космос</h3>
-
+        <ul>
+            <li>12 апреля 1961 года — совершён первый полёт человека в космос (Юрий Гагарин) на корабле «<a href="https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%81%D1%82%D0%BE%D0%BA-1" title="Восток-1">Восток-1</a>».</li>
+            <li>12 августа 1962 года — совершён первый в мире групповой космический полёт на кораблях «<a href="https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%81%D1%82%D0%BE%D0%BA-3" title="Восток-3">Восток-3</a>» и «<a href="https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%81%D1%82%D0%BE%D0%BA-4" title="Восток-4">Восток-4</a>». Максимальное сближение кораблей составило около 6,5 км.</li>
+            <li>16 июня 1963 года — совершён первый в мире полёт в космос женщины-космонавта (Валентина Терешкова) на космическом корабле «<a href="https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%81%D1%82%D0%BE%D0%BA-6" title="Восток-6">Восток-6</a>».</li>
+            <li>12 октября 1964 года — был совершен полёт первый в мире многоместный космический корабль «<a href="https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%81%D1%85%D0%BE%D0%B4-1" title="Восход-1">Восход-1</a>».</li>
+            <li>18 марта 1965 года — был совершён первый в истории выход человека в открытый космос. Космонавт Алексей Леонов совершил выход в открытый космос из корабля «<a href="https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%81%D1%85%D0%BE%D0%B4-2" title="Восход-2">Восход-2</a>».</li>
+        </ul>
+        <p>«Буран» — советский орбитальный корабль-ракетоплан многоразовой транспортной космической системы (МТКС), созданный в рамках программы «Энергия — Буран».
+            Первый и единственный космический полёт «Буран» совершил 15 ноября 1988 года в автоматическом режиме, без экипажа на борту; больше его не запускали («Буран» был рассчитан на 100 полётов в космос). Ряд технических решений, полученных при создании «Бурана», был использован в российской и зарубежной ракетно-космической технике.
+            По мнению зарубежных специалистов «Буран» был ответом на аналогичный американский проект «Спейс шаттл» и задумывался как военная система, которая, впрочем, была ответом на, как тогда считали, планировавшееся применение в военных целях американских шаттлов.Программа имеет свою предысторию:
+            В 1972 г. Никсон объявил, что в США начинает разрабатываться программа «Space Shuttle». Она была объявлена как национальная, рассчитанная на 60 пусков челнока в год, предполагалось создать 4 таких корабля; затраты на программу планировались в 5 миллиардов 150 миллионов долларов в ценах 1971 г.
+            Челнок выводил на околоземную орбиту 29,5 т и мог спускать с орбиты груз до 14,5 т. Вес, выводимый на орбиту при помощи одноразовых носителей в Америке, даже не достигал 150 т/год, а тут задумывалось в 12 раз больше; ничего с орбиты не спускалось, а тут предполагалось возвращать 820 т/год…
+            Это была не просто программа создания какой-то космической системы под девизом снижения затрат на транспортные расходы (наши, нашего института проработки показали, что никакого снижения фактически не будет наблюдаться), она имела явное целевое военное назначение.
+            <span style="display: block; font-style: italic; text-align: right; margin: 10px 0;">— Директор Центрального НИИ машиностроения Ю. А. Мозжорин</span>
+            Многоразовые космические системы имели в СССР как сильных сторонников, так и авторитетных противников. Желая окончательно определиться с МКС, ГУКОС решил выбрать авторитетного арбитра в споре военных с промышленностью, поручив головному институту Минобороны по военному космосу (ЦНИИ 50) провести научно-исследовательскую работу (НИР) по обоснованию необходимости МКС для решения задач по обороноспособности страны.
+            Но и это не внесло ясности, так как генерал Мельников, руководивший этим институтом, решив подстраховаться, выпустил два «отчёта»: один — в пользу создания МКС, другой — против. В конце концов оба этих отчёта, обросшие многочисленными авторитетными «Согласовано» и «Утверждаю», встретились в самом неподходящем месте — на столе Д. Ф. Устинова. Раздражённый результатами «арбитража»,
+            Устинов позвонил Глушко и попросил ввести его в курс дела, представив подробную информацию по вариантам МКС, но Глушко неожиданно отправил на встречу с секретарём ЦК КПСС, кандидатом в члены Политбюро, вместо себя — Генерального конструктора — своего сотрудника, и. о. начальника 162 отдела Валерия Бурдакова.
+            Приехав в кабинет Устинова на Старой площади, Бурдаков стал отвечать на вопросы секретаря ЦК. Устинова интересовали все подробности: зачем нужна МКС, какой она может быть, что нам для этого нужно, зачем в США создают свой Шаттл, чем это нам грозит. Как впоследствии вспоминал Валерий Павлович, Устинова интересовали в первую очередь военные возможности МКС,
+            и он представил Д. Ф. Устинову своё видение использования орбитальных челноков как возможных носителей термоядерного оружия, которые могут базироваться на постоянных военных орбитальных станциях в немедленной готовности к нанесению сокрушительного удара в любой точке планеты.
+            Перспективы МКС, представленные Бурдаковым, настолько глубоко взволновали и заинтересовали Д. Ф. Устинова, что он в кратчайший срок подготовил решение, которое было обсуждено в Политбюро, утверждено и подписано Л. И. Брежневым, а тема многоразовой космической системы получила максимальный приоритет среди всех космических программ в партийно-государственном руководстве и ВПК.
+            Чертежи и фотографии Шаттла были впервые получены в СССР по линии ГРУ в начале 1975 года. Сразу же были проведены две экспертизы на военную составляющую: в военных НИИ и в Институте прикладной математики под руководством Мстислава Келдыша. Выводы: «будущий корабль многоразового использования сможет нести ядерные боеприпасы и атаковать ими территорию СССР практически из любой точки околоземного космического пространства» и
+            «Американский шаттл грузоподъёмностью 30 тонн в случае его загрузки ядерными боеголовками способен совершать полеты вне зоны радиовидимости отечественной системы предупреждения о ракетном нападении. Совершив аэродинамический манёвр, например, над Гвинейским заливом, он может выпустить их по территории СССР» — подтолкнули руководство СССР к созданию ответа — «Бурана».
+            И говорят, что мы будем туда летать раз в неделю, понимаете… А целей и грузов нет, и сразу возникает опасение, что они создают корабль под какие-то будущие задачи, про которые мы не знаем. Возможно применение военное? Безусловно.
+            <span style="display: block; font-style: italic; text-align: right; margin: 10px 0;">— Вадим Лукашевич — историк космонавтики, кандидат технических наук</span>
+            И вот они это продемонстрировали на том, что над Кремлём они прошлись на «Шаттле», вот это был всплеск наших военных, политиков, и так было принято решение в одно время: отработка методики перехвата космических целей, высоких, с помощью самолётов.
+            <span style="display: block; font-style: italic; text-align: right; margin: 10px 0;">— Магомед Толбоев, Герой России Заслуженный лётчик-испытатель РФ</span>
+            К 1 декабря 1988 года был по крайней мере один засекреченный запуск «Шаттла» с военными задачами (номер полета по кодификации НАСА — STS-27). В 2008 году стало известно, что во время полёта по заданию NRO и ЦРУ был выведен на орбиту всепогодный разведывательный спутник Lacrosse 1, который делал снимки в радиодиапазоне способом радиолокации.
+            В США заявляли, что система «Спейс шаттл» создавалась в рамках программы гражданской организации — НАСА. Целевая космическая группа под руководством вице-президента С. Агню в 1969—1970 годах разработала несколько вариантов перспективных программ мирного освоения космического пространства после окончания лунной программы. В 1972 году Конгресс, основываясь на экономическом анализе,
+            поддержал проект создания многоразовых челноков взамен одноразовых ракет.
+            В апреле 1973 года в ВПК с привлечением головных институтов (ЦНИИМаш, НИИТП, ЦАГИ, ВИАМ, 50 ЦНИИ, 30 ЦНИИ) был разработан и разослан на рассмотрение и согласование в МОМ, МАП и МО СССР и ряд других смежных министерств проект Решения ВПК по проблемам, связанным с созданием многоразовой космической системы. В правительственном Постановлении № П137/VII от 17 мая 1973 года, помимо организационных вопросов, содержался пункт,
+            обязывающий «министра С. А. Афанасьева и В. П. Глушко подготовить в четырёхмесячный срок предложения о плане дальнейших работ».
+            Тактико-техническое задание на разработку многоразовой космической системы выдано Главным управлением космических средств Министерства обороны СССР и утверждено Д. Ф. Устиновым 8 ноября 1976 года. В том же году головным разработчиком корабля стало специально созданное НПО «Молния». Новое объединение возглавил Глеб Евгеньевич Лозино-Лозинский, уже в 1960-е годы работавший над проектом многоразовой авиационно-космической системы «Спираль».
+            Производство орбитальных кораблей осуществлялось на Тушинском машиностроительном заводе с 1980 года; к 1984 году был готов первый полномасштабный экземпляр. С завода корабли доставлялись водным транспортом (на барже под тентом) в город Жуковский, а оттуда (с аэродрома Раменское) — воздушным транспортом (на специальном самолёте-транспортировщике ВМ-Т) — на аэродром «Юбилейный» космодрома Байконур.
+            В 1984 году в ЛИИ им. М. М. Громова были сформированы экипажи для испытания аналога «Бурана» — БТС-02, которые проводились вплоть до 1988 года. Эти же экипажи планировались и для первого пилотируемого полёта «Бурана». Отбор лётчиков-испытателей на полёт на "Буране" был поручен лётчику-космонавту, Герою Советского Союза И. Волку весной 1977 г. Требовалось отобрать 7 человек с хорошей физической подготовкой для новой сверхсекретной программы.
+            Ими стали В. Букреев, А. Щукин, Р. Станкявичюс, А. Левченко, О. Кононенко, А. Лысенко и Н. Садовников. Первым погиб Виктор Букреев. 17 мая 1977 года он совершал обычный тренировочный полёт на истребителе МиГ-25. Первый полёт прошёл удачно. Второй полёт назначен на 20 мая. Во время взлёта было подломлено переднее шасси. Машина загорелась, Букреев получил ожоги, самолёт упал, из горящего истребителя ещё живого лётчика увезли в больницу, но он скончался 22 мая.
+            Вторым погиб Александр Лысенко 23 июня того же года. Вместе с напарником он испытывал пилотажный прибор на истребителе МиГ-23. Прибор отказал. Лысенко не успел катапультироваться. Истребитель рухнул на землю. Третим погиб Олег Кононенко. 8 сентября 1980 г. при испытаниях истребителя Як-36 на учениях в Южно-Китайском море у истребителя отказали оба двигателя, он сорвался в штопор, Кононенко не справился с управлением и машина рухнула в воду.
+            На этих трёх аэродромах (и в их районах) были развёрнуты комплексы радиотехнических систем навигации, посадки, контроля траектории и управления воздушным движением «Вымпел» для обеспечения штатной посадки «Бурана» (в автоматическом и ручном режиме).
+            С целью обеспечения готовности к вынужденной посадке «Бурана» (в ручном режиме) построены или усилены ВПП ещё на четырнадцати аэродромах, в том числе вне территории СССР (на Кубе, в Ливии).
+            Полноразмерный аналог «Бурана», имевший обозначение БТС-002(ГЛИ), был изготовлен для лётных испытаний в атмосфере Земли. В его хвостовой части стояли четыре турбореактивных двигателя, позволявшие ему взлетать с обычного аэродрома. В 1985—1988 годах его использовали в ЛИИ МАП СССР для отработки системы управления и системы автоматической посадки, а также для подготовки лётчиков-испытателей перед полётами в космос.
+            10 ноября 1985 года в ЛИИ МАП СССР совершил первый атмосферный полёт полноразмерный аналог «Бурана» (машина 002 ГЛИ — горизонтальные лётные испытания). Пилотировали машину лётчики-испытатели ЛИИ Игорь Петрович Волк и Р. А. Станкявичюс.
+            Ранее приказом МАП СССР от 23 июня 1981 года № 263 был создан Отраслевой отряд космонавтов-испытателей Минавиапрома СССР в составе: Волк И. П., Левченко А. С., Станкявичюс Р. А. и Щукин А. В. (первый набор).
+        </p>
+            <p class="footer-end" elementtiming="last-footer-text">END</p>
 
         <script src="../../send.js"></script>
         <script src="../plugins/getSystemInfo.js"></script>
         <script src="../plugins/getBrowserInfo.js"></script>
         <script>
+            const browserInfo = (new BrowserInfo()).getBrowserInfo();
+            const operatingSystem = (new SystemInfo()).getSystemInfo();
             let counter = new Counter();
     
-            counter.init('D8F28E50-3339-11EC-9EDF-9F93000295B1', String(Math.random()).substr(2, 12), 'History-page test');
+            counter.init('D8F28E50-3339-11EC-9EDF-9F93055895B1', String(Math.random()).substr(2, 12), 'History-page test');
             counter.setAdditionalParams({
                 env: 'production',
                 platform: navigator.platform,
-                browser: navigator.userAgent,
-                browserCookie: (navigator.cookieEnabled) ? true : false
+                operatingSystem: operatingSystem,
+                browser: browserInfo.browserName,
+                browserVersion: browserInfo.browserFullVersion,
+                browserDetailInfo: browserInfo.browserDetailInfo,
+                browserCookie: browserInfo.browserCookie,
+                mobile: browserInfo.mobile,
+            //For Session
+                user: 'User',
+                sessionId: 'User-pochemypotomy123'
             });
 
-
             let time = window.performance.timing;
-        //Perfomance Timing API
-            
-            //Setting connection with Server
-            const dns = time.domainLookupEnd - time.domainLookupStart;
-            const tcp = time.connectEnd - time.connectStart;
-            const ssl = time.requestStart - time.secureConnectionStart;
+            console.log('Operation System:', operatingSystem);
+            console.log('Browser:', browserInfo);
+
+    //Perfomance & Navigation Timing API
+        //Setting connection with Server
+            const dns = (time.domainLookupEnd - time.domainLookupStart).toFixed(4);
+            const tcp = (time.connectEnd - time.connectStart).toFixed(4);
+            const ssl = (time.requestStart - time.secureConnectionStart).toFixed(4);
             console.log('DNS: ', dns, 'TCP :', tcp, 'SSL :', ssl);
 
-            //First steps of getting data from Server
-            const ttfb = time.responseStart - time.navigationStart;             //Time to First Byte
+        //First steps of getting data from Server
+            const ttfb = (time.responseStart - time.navigationStart).toFixed(4);             //Time to First Byte
             console.log('ttfb - ', ttfb);
 
-            //Page load time
+        //Page load time DOESN'T WORK!!!! .loadEventStart returns 0!!!!!!!!!!!!!
             const pageLoadTime = time.loadEventStart - time.navigationStart;
             console.log('pageLoadTime - ', pageLoadTime);
 
-            //Compression
-            const compressionSavings = 1 - (time.transferSize / time.decodedBodySize);
+        //Compression
+            const compressionSavings = 1 - (performance.getEntriesByType("navigation")[0].decodedBodySize / performance.getEntriesByType("navigation")[0].encodedBodySize) | 'none';
             console.log('Compression :', compressionSavings);
     
             counter.send('DNS', dns);
@@ -121,28 +175,67 @@
             counter.send('PageLoadTime', pageLoadTime);
             counter.send('CompressionSavings', compressionSavings);
 
-        //Paint Timing API
+    //Paint Timing API
+        //First paint: when user sees anything at all that’s not the browser’s default background.
+        //First contentful paint: when user sees something “contentful”, like an image or text (DIV with a background color isn't “contentful”)
+            
+        //This metric shows how long loop executes 
             performance.mark('beginForLoop');
             for(let i = 0; i < 10000; i++) {
-                //HERE SHOULD BE SOME HEAVY FUNCTION!!!
+                let j = Math.random(150 - 20 * 5 / 17);
+                j *= Math.random;
+                if (j % 3 === 1) {
+                    j += Math.random(100);
+                }
+                else {
+                    j -= Math.random(50);
+                }
             }
             performance.mark('endForLoop');
             performance.measure('measureForLoop','beginForLoop', 'endForLoop');
-            console.log('Loop executing: ', performance.getEntriesByName('measureForLoop')[0].duration.toFixed(3));
+            console.log('Loop executing: ', performance.getEntriesByName('measureForLoop')[0].duration.toFixed(4));
+            counter.send('LoopExecuting', performance.getEntriesByName('measureForLoop')[0].duration.toFixed(4));
 
+        //Metric of downloading Image from local repository
             performance.measure('measureForImage','imgDownloadStart', 'imgDownloadEnd');
-            console.log('Image download: ', performance.getEntriesByName('measureForImage')[0].duration.toFixed(3));
+            console.log('Image download: ', performance.getEntriesByName('measureForImage')[0].duration.toFixed(4));
+            counter.send('StaticImageLoad', performance.getEntriesByName('measureForImage')[0].duration.toFixed(4));
 
         //Images downloading (from the Internet) timing
-        (function checkImageDownloadingTime() {
-            const observer = new PerformanceObserver((list) => {
-                let entries = list.getEntries();
-                for(let i = 0; i < entries.length; i++) {
-                    console.log(`Downloading image "${entries[i].element.alt}" took`, entries[i].loadTime.toFixed(3));
-                }
-            });
-            observer.observe({ entryTypes: ["element"] });
-        })();
+            (function getImageDownloadingTime() {
+                let j = 1;
+                const observer = new PerformanceObserver((list) => {
+                    let entries = list.getEntriesByName('image-paint').filter(image => image.identifier !== 'image-static');
+                    for(let i = 0; i < entries.length; i++) {
+                        console.log(`Downloading image "${entries[i].element.alt}" tooks`, j, entries[i].loadTime.toFixed(4));
+                        counter.send(`Image${j}Download`, entries[i].loadTime.toFixed(4));
+                        j++;
+                    }
+                });
+                observer.observe({ entryTypes: ["element"] });
+            })();
+
+        // This function returns timings of rendering some elements of page (first in Header, first in Content and last in Footer)    
+            (function getContentfulTimings() {
+                const observer = new PerformanceObserver((list) => {
+                    let entries = list.getEntriesByName('text-paint');
+                    console.log(entries);
+                    for(let i = 0; i < entries.length; i++) {
+                        if(entries[i].identifier === 'first-header-text') {
+                            counter.send('FirstContentfulHeader', (entries[i].renderTime).toFixed(4));
+                            continue;
+                        }
+                        else if(entries[i].identifier === 'first-content-text') {
+                            counter.send('FirstContentfulContent', (entries[i].renderTime).toFixed(4));
+                            continue;
+                        }
+                        else {
+                            counter.send('LastContentfulFooter', (entries[i].renderTime).toFixed(4));
+                        }
+                    }
+                });
+                observer.observe({entryTypes: ["element"]});
+            })();
             
         </script>
     </body>

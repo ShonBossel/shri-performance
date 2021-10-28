@@ -1,7 +1,11 @@
 //This function return user's Operation System
+//If you want to see information about Operation System on each page, uncomment comments with console.log()
 
-function getSystemInfo() {
-    let os = '';
+function SystemInfo() {
+    this.os = '';
+}
+
+SystemInfo.prototype.getSystemInfo = function() {
     const clientStrings = [
         {s:'Windows 3.11', r:/Win16/},
         {s:'Windows 95', r:/(Windows 95|Win95|Windows_95)/},
@@ -30,15 +34,17 @@ function getSystemInfo() {
         {s:'OS/2', r:/OS\/2/},
         {s:'Search Bot', r:/(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
     ];
+
     for (let id in clientStrings) {
         let cs = clientStrings[id];
         if (cs.r.test(navigator.userAgent)) {
-            os = cs.s;
+            this.os = cs.s;
             break;
         }
     }
-    return os;
+    // console.log('System information:');
+    // console.log('Operation System: ', this.os);
+    return this.os;
 }
 
-console.log('System information:');
-console.log('Operation System: ', getSystemInfo(), '.');
+

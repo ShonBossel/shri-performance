@@ -3,7 +3,7 @@ html {
 }
   
 body {
-    margin: 0 100px;
+    margin: 20px 100px;
     align-items: center;
     font-family: 'YS Text';
     font-style: normal;
@@ -55,6 +55,10 @@ h2, h3 {
 .main-block {
     text-indent: 20px;
     text-align: justify;
+}
+
+.footer-end {
+    font-style: italic;
 }
 
 @media (max-width: 600px) {
