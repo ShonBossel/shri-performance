@@ -15,7 +15,7 @@
     
     <body>
         <header>
-            <p>Initial Page</p>
+            <p elementtiming="first-header-text">Initial Page</p>
             <div class="navigation-menu">
                 <button class="original-button disabled-button" disabled>History</button>
                 <button class="original-button"><a href="Pages/history.html">History</a></button>
@@ -26,7 +26,7 @@
         
         <!-- On this page will be collected next metric information:
         *  -->
-        <h3>Данная страница содержит в себе немного информации и действий, ее можно отнести к разряду "легких". Результаты ее тестирования не должны выдавать плохих результатов.</h3>
+        <h3  elementtiming="first-content-text">Данная страница содержит в себе немного информации и действий, ее можно отнести к разряду "легких". Результаты ее тестирования не должны выдавать плохих результатов.</h3>
         <span class="page-information"><p>В ней используется 1 вариант шрифта, нет картинок, анимаций и т.д. Файл стилей имеет небольшой размер.</p></span>
         <h2>Информационный текст для главной страницы</h2>
         <div class="main-block">
@@ -38,7 +38,6 @@
             <p>Пусть понятие «продающий текст» не вводит вас в заблуждение: этот формат совсем не обязательно должен что-то нахваливать и навязчиво предлагать. Хотя, конечно, бывает и такое. Скорее, такой вид контента призван дать понять читателю, что главная страница сайта полностью соответствует его ожиданиям. Посетителю дается заряд мотивации для посещения других страниц ресурса. Обычно продающие тексты на главных страницах размещают интернет-магазины, сайты услуг и другие площадки, стремящиеся максимально быстро приковать внимание читателя к своему предложению.</p>
             <p>Продающий текст может быть оптимизирован. Например, главная страница этого сайта призвана не только красиво подавать услуги, но и бороться за высокие места в выдаче. Что, кстати, у нее отлично получается.</p>
         </div>
-
         <script src="../send.js"></script>
         <script>
             function browserDetailedInfo() {
@@ -186,17 +185,17 @@
         //domContentLoadedEventEnd - Момент сразу после исполнения всех скриптов
         //domComplete - Парсер HTML завершил работу над основным документом, срабатывает событие readystatechange    
         //Setting connection with Server
-            const dns = time.domainLookupEnd - time.domainLookupStart;
-            const tcp = time.connectEnd - time.connectStart;
-            const ssl = time.requestStart - time.secureConnectionStart;
+            const dns = (time.domainLookupEnd - time.domainLookupStart).toFixed(4);
+            const tcp = (time.connectEnd - time.connectStart).toFixed(4);
+            const ssl = (time.requestStart - time.secureConnectionStart).toFixed(4);
             console.log('DNS: ', dns, 'TCP :', tcp, 'SSL :', ssl);
 
             //First steps of getting data from Server
-            const ttfb = time.responseStart - time.navigationStart;             //Time to First Byte
+            const ttfb = (time.responseStart - time.navigationStart).toFixed(4);             //Time to First Byte
             console.log('ttfb - ', ttfb);
 
-            //Page load time
-            const pageLoadTime = time.loadEventStart - time.navigationStart;
+            //Page load time DOESN'T WORK!!!! domComlete return 0!!!!!!!!!!!!! .duration - the same!!!
+            const pageLoadTime = (time.loadEventStart - (performance.getEntriesByType("navigation")[0]).startTime).toFixed(4);
             console.log('pageLoadTime - ', pageLoadTime);
 
             //Compression
@@ -213,18 +212,22 @@
     //Paint Timing API
         //First paint: when user sees anything at all that’s not the browser’s default background.
         //First contentful paint: when user sees something “contentful”, like an image or text (DIV with a background color isn't “contentful”)
-            // if (window.performance) {
-            //     let performance = window.performance;
-            //     let performanceEntries = performance.getEntriesByType('img');
-            //     console.log('performanceEntries - ', performanceEntries);
-            //     performanceEntries.forEach( (performanceEntry, i, entries) => {
-            //         console.log("The time to " + performanceEntry.name + " was " + performanceEntry.startTime + " milliseconds.");
-            //     });
-            // } else {
-            //         console.log("Performance timing isn't supported in this browser.");
-            // }
-
-            // console.log(paintEntries);
+        (function getFirstContentful() {
+            const observer = new PerformanceObserver((list) => {
+                let entries = list.getEntries();
+                console.log(entries);
+                for(let i = 0; i < entries.length; i++) {
+                    if(entries[i].identifier === 'first-header-text') {
+                        counter.send('FirstContentful-Header', (entries[i].renderTime).toFixed(4));
+                        continue;
+                    }
+                    else {
+                        counter.send('FirstContentful-Content', (entries[i].renderTime).toFixed(4));
+                    }
+                }
+            });
+            observer.observe({entryTypes: ["element"]});
+        })(); 
         </script>
     </body>
 </html>

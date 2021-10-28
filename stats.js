@@ -40,9 +40,9 @@ function showMetricByPeriod(data, page, startDate, endDate) {
 //This function shows metric for few days as total values (in one table)
 function showAllMetricByPeriod(data, page, startDate, endDate) {
 	console.log(`Total metrics for few days from ${startDate} till ${endDate}:`);
+
 	console.log('Perfomance Timing Metrics:');
-	let table = {};
-	
+	let table = {};	
 	table.dns = addMetricByFewDays(data, page, 'DNS', startDate, endDate);
 	table.tcp = addMetricByFewDays(data, page, 'TCP', startDate, endDate);
 	table.ssl = addMetricByFewDays(data, page, 'SSL', startDate, endDate);
@@ -54,10 +54,14 @@ function showAllMetricByPeriod(data, page, startDate, endDate) {
 
 	console.log('Paint Timing Metrics:');
 	table = {};
+	table.fch = addMetricByFewDays(data, page, 'FirstContentful-Header', startDate, endDate);
+	table.fcc = addMetricByFewDays(data, page, 'FirstContentful-Content', startDate, endDate);
+	
+	console.table(table);
 }
 
-// show user session
-function showSession(data, date, user, id) {
+// This function shows user session
+function showSession(data, date, user, id/* = true*/) {
 	console.log(`Session information for user "${user}" on ${date}:`);
 
 	let sampleData = data
@@ -77,18 +81,25 @@ function showSession(data, date, user, id) {
 	console.table(sampleData);
 }
 
-// compare metric in different срезах
-function compareMetric() {
+// This function compares metric in different sclices and shows info of each browser in each table
+function compareMetric(data, page, date) {
+	console.log('Comparsion of metrics in different browsers:');
+	let browsers = data.map(item => item.additional.browser);
+
+	for (let browser of browsers) {
+		console.log(`Metrics information in browser "${browser}":`);
+		calcMetricsByDate(data, page, date, browser);
+	}
 }
 
-// any other scenaries, которые считаете полезными
+// Any other scenaries, that you find usefull
 
 
-// Пример
+// Example
 // This function adds metric for chosen date
-function addMetricByDate(data, page, name, date) {
+function addMetricByDate(data, page, name, date, browser/* = true*/) {
 	let sampleData = data
-					.filter(item => item.page == page && item.name == name && item.date == date)
+					.filter(item => item.page == page && item.name == name && item.date == date && (browser ? item.additional.browser==browser: true))
 					.map(item => item.value);
 
 	let result = {};
@@ -119,32 +130,24 @@ function addMetricByFewDays(data, page, name, startDate, endDate) {
 	return result;
 }
 // рассчитывает все метрики за день
-function calcMetricsByDate(data, page, date) {
+function calcMetricsByDate(data, page, date, browser) {
 	console.log(`All metrics for ${date}:`);
 
 	let table = {};
-	// table.connect = addMetricByDate(data, page, 'connect', date);
-	// table.ttfb = addMetricByDate(data, page, 'ttfb', date);
-	// table.load = addMetricByDate(data, page, 'load', date);
-	// table.square = addMetricByDate(data, page, 'square', date);
-	// table.load = addMetricByDate(data, page, 'load', date);
-	// table.generate = addMetricByDate(data, page, 'generate', date);
-	// table.draw = addMetricByDate(data, page, 'draw', date);
-
 	console.log('Perfomance Timing Metrics:');
-	table.dns = addMetricByDate(data, page, 'DNS', date);
-	table.tcp = addMetricByDate(data, page, 'TCP', date);
-	table.ssl = addMetricByDate(data, page, 'SSL', date);
-	table.ttfb = addMetricByDate(data, page, 'TtFB', date);
-	table.pageLoadTime = addMetricByDate(data, page, 'PageLoadTime', date);
-	table.compressionSavings = addMetricByDate(data, page, 'CompressionSavings', date);
+	table.dns = addMetricByDate(data, page, 'DNS', date, browser);
+	table.tcp = addMetricByDate(data, page, 'TCP', date, browser);
+	table.ssl = addMetricByDate(data, page, 'SSL', date, browser);
+	table.ttfb = addMetricByDate(data, page, 'TtFB', date, browser);
+	table.pageLoadTime = addMetricByDate(data, page, 'PageLoadTime', date, browser);
+	table.compressionSavings = addMetricByDate(data, page, 'CompressionSavings', date, browser);
 
 	console.table(table);
 
 	table = {};
-
 	console.log('Paint Timing Metrics:');
-	
+	table.fch = addMetricByDate(data, page, 'FirstContentful-Header', date, browser);
+	table.fcc = addMetricByDate(data, page, 'FirstContentful-Content', date, browser);
 
 	console.table(table);
 };
@@ -154,14 +157,16 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9300
 	.then(result => {
 		let data = prepareData(result);
 
-		calcMetricsByDate(data, 'send test', '2021-10-27');
+		calcMetricsByDate(data, 'Home-page test', '2021-10-27');
 		
 		// добавить свои сценарии, реализовать функции выше
 		console.log('------------------------------------');
 //This will show metrics data in each table for each day inside interval from 25.10.21 till 27.10.21
-		showMetricByPeriod(data, 'send test', '2021-10-25', '2021-10-27');
+		showMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-27');
 //This will show metrics data in one total table for all days inside interval from 25.10.21 till 27.10.21
-		showAllMetricByPeriod(data, 'send test', '2021-10-25', '2021-10-27');
-//This will show netrics data for "User" with id "User-pochemypotomy123" for 27.10.21
+		showAllMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-27');
+//This will show metrics data for "User" with id "User-pochemypotomy123" for 27.10.21
 		showSession(data, '2021-10-27', 'User', 'User-pochemypotomy123');
+//This will show comparsion metrics for users browsers each in separate table
+		compareMetric(data, 'Home-page test', '2021-10-25');
 	});
