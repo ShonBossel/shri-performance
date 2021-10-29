@@ -39,7 +39,7 @@ function showMetricByPeriod(data, page, startDate, endDate) {
 
 //This function shows metric for few days as total values (in one table)
 function showAllMetricByPeriod(data, page, startDate, endDate) {
-	console.log(`Total metrics for few days from ${startDate} till ${endDate}:`);
+	console.log(`Total metrics for few days for "${page}" from ${startDate} till ${endDate}:`);
 
 	console.log('Perfomance & Navigation Timing Metrics:');
 	let table = {};	
@@ -49,20 +49,24 @@ function showAllMetricByPeriod(data, page, startDate, endDate) {
 	table.ttfb = addMetricByFewDays(data, page, 'TtFB', startDate, endDate);
 	table.pageLoadTime = addMetricByFewDays(data, page, 'PageLoadTime', startDate, endDate);
 	table.compressionSavings = addMetricByFewDays(data, page, 'CompressionSavings', startDate, endDate);
-
 	console.table(table);
 
 	console.log('Paint Timing Metrics:');
 	table = {};
-	table.lex = addMetricByFewDays(data, page, 'LoopExecuting', startDate, endDate);
-	table.sid = addMetricByFewDays(data, page, 'StaticImageLoad', startDate, endDate);
+	table.fp = addMetricByFewDays(data, page, 'FirstPaint', startDate, endDate);
+	table.fcp = addMetricByFewDays(data, page, 'FirstContentfulPaint', startDate, endDate);
+	if(page === 'History-page test') {
+		table.lex = addMetricByFewDays(data, page, 'LoopExecuting', startDate, endDate);
+		table.sid = addMetricByFewDays(data, page, 'StaticImageLoad', startDate, endDate);
+	}
 	table.fch = addMetricByFewDays(data, page, 'FirstContentfulHeader', startDate, endDate);
 	table.fcc = addMetricByFewDays(data, page, 'FirstContentfulContent', startDate, endDate);
 	table.lcf = addMetricByFewDays(data, page, 'LastContentfulFooter', startDate, endDate);
-	table.im1 = addMetricByFewDays(data, page, 'Image1Download', startDate, endDate);
-	table.im2 = addMetricByFewDays(data, page, 'Image2Download', startDate, endDate);
-	table.im3 = addMetricByFewDays(data, page, 'Image3Download', startDate, endDate);
-	
+	if(page === 'History-page test') {
+		table.im1 = addMetricByFewDays(data, page, 'Image1Download', startDate, endDate);
+		table.im2 = addMetricByFewDays(data, page, 'Image2Download', startDate, endDate);
+		table.im3 = addMetricByFewDays(data, page, 'Image3Download', startDate, endDate);
+	}	
 	console.table(table);
 }
 
@@ -157,7 +161,7 @@ function addMetricByFewDays(data, page, name, startDate, endDate) {
 
 //This function returns metric for images downloading
 function calcImageDownloadMetrics(data, page = 'Gallery-page test', date, browser) {
-	console.log(`Metrics of images downloading for ${date}:`);
+	console.log(`Metrics of images downloading on "${page}" for ${date}:`);
 	
 	let table = {};
 	table.im1 = addMetricByDate(data, page, 'ImageZemlyaTemnotaLoading', date, browser);
@@ -179,9 +183,18 @@ function calcImageDownloadMetrics(data, page = 'Gallery-page test', date, browse
 	console.table(table);
 }
 
+// This function returns Larjest Contentful Paint metrics
+function calcLCP(data, page, date) {
+	console.log(`Larjest Contentful Delay on "${page}" for ${date}:`);
+
+	let table = {};
+	table.lcp = addMetricByDate(data, page, 'LCP', date);
+	console.table(table);
+}
+
 // Calculate all metrics for day
 function calcMetricsByDate(data, page, date, browser) {
-	console.log(`All metrics for ${date}:`);
+	console.log(`All metrics for "${page}" on ${date}:`);
 
 	let table = {};
 	console.log('Perfomance & Navigation Timing Metrics:');
@@ -195,14 +208,20 @@ function calcMetricsByDate(data, page, date, browser) {
 
 	table = {};
 	console.log('Paint Timing Metrics:');
-	table.lex = addMetricByDate(data, page, 'LoopExecuting', date, browser);
-	table.sid = addMetricByDate(data, page, 'StaticImageLoad', date, browser);
+	table.fp = addMetricByDate(data, page, 'FirstPaint', date, browser);
+	table.fcp = addMetricByDate(data, page, 'FirstContentfulPaint', date, browser);
+	if(page === 'History-page test') {
+		table.lex = addMetricByDate(data, page, 'LoopExecuting', date, browser);
+		table.sid = addMetricByDate(data, page, 'StaticImageLoad', date, browser);
+	}
 	table.fch = addMetricByDate(data, page, 'FirstContentfulHeader', date, browser);
 	table.fcc = addMetricByDate(data, page, 'FirstContentfulContent', date, browser);
 	table.lcf = addMetricByDate(data, page, 'LastContentfulFooter', date, browser);
-	table.im1 = addMetricByDate(data, page, 'Image1Download', date, browser);
-	table.im2 = addMetricByDate(data, page, 'Image2Download', date, browser);
-	table.im3 = addMetricByDate(data, page, 'Image3Download', date, browser);	
+	if(page === 'History-page test') {
+		table.im1 = addMetricByDate(data, page, 'Image1Download', date, browser);
+		table.im2 = addMetricByDate(data, page, 'Image2Download', date, browser);
+		table.im3 = addMetricByDate(data, page, 'Image3Download', date, browser);
+	}
 	console.table(table);
 };
 
@@ -216,54 +235,58 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9305
 	//console.log('************************************');
 	
 	//Metrics for Home-page
-		//calcMetricsByDate(data, 'Home-page test', '2021-10-29');
-		//console.log('------------------------------------');
+		calcMetricsByDate(data, 'Home-page test', '2021-10-29');
+		console.log('------------------------------------');
 //This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
 		//showMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-28');
 		//console.log('------------------------------------');
 //This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
 		//showAllMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-28');
 		//console.log('------------------------------------');
-//This will show metrics data for "User" with id "User-pochemypotomy123" for 28.10.21
-		//showSession(data, '2021-10-28', 'User', 'User-pochemypotomy123');
+//This will show metrics data for "User" with id "User-1" for 28.10.21
+		//showSession(data, '2021-10-28', 'User', 'User-1');
 		//console.log('------------------------------------');
 //This will show comparsion metrics for users browsers each in separate table for 28.10.21
 		//compareMetric(data, 'Home-page test', '2021-10-28');
 		//console.log('------------------------------------');
 //This will show comparsion metrics for different types of platform (mobile & desktop)
 		//comparePlatformTypeMetric(data, "Home-page test", '2021-10-28');
+//This will show metrics data for Larjest Contentfull Paint on 29.10.21
+		//calcLCP(data, 'Home-page test', '2021-10-29');
 	//console.log('************************************');
 
 		//Metrics for History-page
-		//calcMetricsByDate(data, 'History-page test', '2021-10-29');
-		//console.log('------------------------------------');
+		calcMetricsByDate(data, 'History-page test', '2021-10-29');
+		console.log('------------------------------------');
 //This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
 		//showMetricByPeriod(data, 'History-page test', '2021-10-25', '2021-10-28');
 		//console.log('------------------------------------');
 //This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
 		//showAllMetricByPeriod(data, 'History-page test', '2021-10-25', '2021-10-28');
 		//console.log('------------------------------------');
-//This will show metrics data for "User" with id "User-pochemypotomy123" for 28.10.21
-		//showSession(data, '2021-10-28', 'User', 'User-pochemypotomy123');
+//This will show metrics data for "User" with id "User-1" for 28.10.21
+		//showSession(data, '2021-10-28', 'User', 'User-1');
 		//console.log('------------------------------------');
 //This will show comparsion metrics for users browsers each in separate table for 28.10.21
 		//compareMetric(data, 'History-page test', '2021-10-28');
 		//console.log('------------------------------------');
 //This will show comparsion metrics for different types of platform (mobile & desktop)
 		//comparePlatformTypeMetric(data, "History-page test", '2021-10-28');
+//This will show metrics data for Larjest Contentfull Paint on 29.10.21
+		//calcLCP(data, 'Home-page test', '2021-10-29');
 	//console.log('************************************');
 
 		//Metrics for Gallery-page
 		calcMetricsByDate(data, 'Gallery-page test', '2021-10-29');
-		//console.log('------------------------------------');
+		console.log('------------------------------------');
 //This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
 		//showMetricByPeriod(data, 'Gallery-page test', '2021-10-25', '2021-10-28');
 		//console.log('------------------------------------');
 //This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
 		//showAllMetricByPeriod(data, 'Gallery-page test', '2021-10-25', '2021-10-28');
 		//console.log('------------------------------------');
-//This will show metrics data for "User" with id "User-pochemypotomy123" for 28.10.21
-		//showSession(data, '2021-10-28', 'User', 'User-pochemypotomy123');
+//This will show metrics data for "User" with id "User-1" for 28.10.21
+		//showSession(data, '2021-10-28', 'User', 'User-1');
 		//console.log('------------------------------------');
 //This will show comparsion metrics for users browsers each in separate table for 28.10.21
 		//compareMetric(data, 'Gallery-page test', '2021-10-28');
@@ -272,5 +295,7 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9305
 		//comparePlatformTypeMetric(data, "Gallery-page test", '2021-10-28');
 //This will show metrics for loading images from Internet for 29.10.21
 		//calcImageDownloadMetrics(data, 'Gallery-page test', '2021-10-29');
+//This will show metrics data for Larjest Contentfull Paint on 29.10.21
+		//calcLCP(data, 'Home-page test', '2021-10-29');
 	//console.log('************************************');
 	});

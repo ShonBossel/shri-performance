@@ -30,7 +30,7 @@
         <div class="main-block">
             <div class="main-block-video">
                 <p>Some Video</p>
-                <iframe src="https://www.youtube.com/embed/BSl6WiwCtlg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe class = "video" src="https://www.youtube.com/embed/BSl6WiwCtlg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="main-block-images">
                 <button class="main-block-images-but">CLICK ME...CLICK!!!!!</button>
@@ -61,7 +61,7 @@
                 browserCookie: browserInfo.browserCookie,
                 mobile: browserInfo.mobile,
             //For Session
-                user: 'User',
+            user: 'User - ' + String(Math.floor(Math.random() * (6 - 1)) + 1),
                 sessionId: 'User-pochemypotomy123'
             });
 
@@ -99,7 +99,23 @@
     //Paint Timing API
         //First paint: when user sees anything at all that’s not the browser’s default background.
         //First contentful paint: when user sees something “contentful”, like an image or text (DIV with a background color isn't “contentful”)
-        
+        (function getPaintTimingMetrics() {
+            let observer = new PerformanceObserver((list) => {
+                const perfEntries = list.getEntries();
+                for (const perfEntry of perfEntries) {
+                    if(perfEntry.name === 'first-paint') {
+                        counter.send('FirstPaint', perfEntry.startTime.toFixed(4));
+                        console.log('First-paint -', perfEntry.startTime.toFixed(4), 'msec');
+                    }
+                    else if(perfEntry.name === 'first-contentful-paint') {
+                        counter.send('FirstContentfulPaint', perfEntry.startTime.toFixed(4));
+                        console.log('First Contentful Paint -', perfEntry.startTime.toFixed(4), 'msec');
+                    }
+                }
+            });
+            observer.observe({entryTypes: ["paint"]});
+        })();
+
     // This function returns timings of rendering some elements of page (first in Header, first in Content and last in Footer)    
         (function getContentfulTimings() {
             const observer = new PerformanceObserver((list) => {
@@ -107,14 +123,17 @@
                 for(let i = 0; i < entries.length; i++) {
                     if(entries[i].identifier === 'first-header-text') {
                         counter.send('FirstContentfulHeader', (entries[i].renderTime).toFixed(4));
+                        console.log('First Contentful Header -', (entries[i].renderTime).toFixed(4), 'msec');
                         continue;
                     }
                     else if(entries[i].identifier === 'first-content-text') {
                         counter.send('FirstContentfulContent', (entries[i].renderTime).toFixed(4));
+                        console.log('First Contentful Content -', (entries[i].renderTime).toFixed(4), 'msec');
                         continue;
                     }
                     else {
                         counter.send('LastContentfulFooter', (entries[i].renderTime).toFixed(4));
+                        console.log('Last Contentful Footer -', (entries[i].renderTime).toFixed(4), 'msec');
                     }
                 }
             });
@@ -164,17 +183,25 @@
             }
         };
         document.querySelector('.main-block-images-but').onclick = function() {
-            performance.mark('startImageLoading');
             downloadImages();
-            performance.mark('endImageLoading');
 
-// This function will calculate total time of downloading images after 60 sec after button click
             setTimeout(() => {
+// This will calculate total time of downloading images after 60 sec after button click
                 const totalImagesLoading = ((endImageLoadingTime - startImageLoadingTime) / 1000).toFixed(4);
                 console.log('Images total downloading time -', totalImagesLoading, 'sec');
                 counter.send('TotalImagesLoading', totalImagesLoading);
+
+// This will calculate Larjest Contentful Metric (what has larjest rendering time) after 60 sec after button click.
+//In elements for choise it takes only that is seemed to user (that's on screen) whithout scrolling, clicking and so on
+                new PerformanceObserver((entryList) => {
+                    for (const entry of entryList.getEntries()) {
+                        console.log('LCP candidate:', entry.startTime, entry);
+                        counter.send('LCP', entry.startTime);
+                    }
+                }).observe({type: 'largest-contentful-paint', buffered: true});
             },60000);
-        } 
+        }
+
         </script>
     </body>
 </html>

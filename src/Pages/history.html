@@ -141,7 +141,7 @@
                 browserCookie: browserInfo.browserCookie,
                 mobile: browserInfo.mobile,
             //For Session
-                user: 'User',
+            user: 'User - ' + String(Math.floor(Math.random() * (6 - 1)) + 1),
                 sessionId: 'User-pochemypotomy123'
             });
 
@@ -178,7 +178,23 @@
     //Paint Timing API
         //First paint: when user sees anything at all that’s not the browser’s default background.
         //First contentful paint: when user sees something “contentful”, like an image or text (DIV with a background color isn't “contentful”)
-            
+        (function getPaintTimingMetrics() {
+            let observer = new PerformanceObserver((list) => {
+                const perfEntries = list.getEntries();
+                for (const perfEntry of perfEntries) {
+                    if(perfEntry.name === 'first-paint') {
+                        counter.send('FirstPaint', perfEntry.startTime.toFixed(4));
+                        console.log('First-paint -', perfEntry.startTime.toFixed(4), 'msec');
+                    }
+                    else if(perfEntry.name === 'first-contentful-paint') {
+                        counter.send('FirstContentfulPaint', perfEntry.startTime.toFixed(4));
+                        console.log('First Contentful Paint -', perfEntry.startTime.toFixed(4), 'msec');
+                    }
+                }
+            });
+            observer.observe({entryTypes: ["paint"]});
+        })();
+
         //This metric shows how long loop executes 
             performance.mark('beginForLoop');
             for(let i = 0; i < 10000; i++) {
@@ -193,12 +209,12 @@
             }
             performance.mark('endForLoop');
             performance.measure('measureForLoop','beginForLoop', 'endForLoop');
-            console.log('Loop executing: ', performance.getEntriesByName('measureForLoop')[0].duration.toFixed(4));
+            console.log('Loop executing -', performance.getEntriesByName('measureForLoop')[0].duration.toFixed(4), 'msec');
             counter.send('LoopExecuting', performance.getEntriesByName('measureForLoop')[0].duration.toFixed(4));
 
         //Metric of downloading Image from local repository
             performance.measure('measureForImage','imgDownloadStart', 'imgDownloadEnd');
-            console.log('Image download: ', performance.getEntriesByName('measureForImage')[0].duration.toFixed(4));
+            console.log('Static image download -', performance.getEntriesByName('measureForImage')[0].duration.toFixed(4), 'msec');
             counter.send('StaticImageLoad', performance.getEntriesByName('measureForImage')[0].duration.toFixed(4));
 
         //Images downloading (from the Internet) timing
@@ -207,7 +223,7 @@
                 const observer = new PerformanceObserver((list) => {
                     let entries = list.getEntriesByName('image-paint').filter(image => image.identifier !== 'image-static');
                     for(let i = 0; i < entries.length; i++) {
-                        console.log(`Downloading image "${entries[i].element.alt}" tooks`, j, entries[i].loadTime.toFixed(4));
+                        console.log(`Downloading image "${entries[i].element.alt}" tooks`, j, (entries[i].loadTime / 1000).toFixed(4), 'sec');
                         counter.send(`Image${j}Download`, entries[i].loadTime.toFixed(4));
                         j++;
                     }
@@ -219,23 +235,34 @@
             (function getContentfulTimings() {
                 const observer = new PerformanceObserver((list) => {
                     let entries = list.getEntriesByName('text-paint');
-                    console.log(entries);
                     for(let i = 0; i < entries.length; i++) {
                         if(entries[i].identifier === 'first-header-text') {
                             counter.send('FirstContentfulHeader', (entries[i].renderTime).toFixed(4));
+                            console.log('First Contentful Header -', (entries[i].renderTime).toFixed(4), 'msec');
                             continue;
                         }
                         else if(entries[i].identifier === 'first-content-text') {
                             counter.send('FirstContentfulContent', (entries[i].renderTime).toFixed(4));
+                            console.log('First Contentful Content -', (entries[i].renderTime).toFixed(4), 'msec');
                             continue;
                         }
                         else {
                             counter.send('LastContentfulFooter', (entries[i].renderTime).toFixed(4));
+                            console.log('Last Contentful Footer -', (entries[i].renderTime).toFixed(4), 'msec');
                         }
                     }
                 });
                 observer.observe({entryTypes: ["element"]});
             })();
+
+// This will calculate Larjest Contentful Metric (what has larjest rendering time) after 60 sec after button click.
+//In elements for choise it takes only that is seemed to user (that's on screen) whithout scrolling, clicking and so on
+        new PerformanceObserver((entryList) => {
+			for (const entry of entryList.getEntries()) {
+			    console.log('LCP candidate:', entry.startTime, entry);
+			    counter.send('LCP', entry.startTime);
+			}
+		}).observe({type: 'largest-contentful-paint', buffered: true});
             
         </script>
     </body>
