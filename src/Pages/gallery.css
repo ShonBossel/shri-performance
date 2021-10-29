@@ -17,3 +17,9 @@ iframe {
     display: block;
     margin: 0 auto;
 }
+
+.gallery-image {
+    margin: 10px auto;
+    width: 100%;
+    border: 2px solid red;
+}

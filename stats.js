@@ -154,7 +154,32 @@ function addMetricByFewDays(data, page, name, startDate, endDate) {
 
 	return result;
 }
-// рассчитывает все метрики за день
+
+//This function returns metric for images downloading
+function calcImageDownloadMetrics(data, page = 'Gallery-page test', date, browser) {
+	console.log(`Metrics of images downloading for ${date}:`);
+	
+	let table = {};
+	table.im1 = addMetricByDate(data, page, 'ImageZemlyaTemnotaLoading', date, browser);
+	table.im2 = addMetricByDate(data, page, 'ImageGalaktikaLoading', date, browser);
+	table.im3 = addMetricByDate(data, page, 'ImageAtmosferaLoading', date, browser);
+	table.im4 = addMetricByDate(data, page, 'ImageZemlyAtmosferaLoading', date, browser);
+	table.im5 = addMetricByDate(data, page, 'ImagePlanetaDnemLoading', date, browser);
+	table.im6 = addMetricByDate(data, page, 'ImageKosmosAstroLoading', date, browser);
+	table.im7 = addMetricByDate(data, page, 'ImageEkzoplanetaLoading', date, browser);
+	table.im8 = addMetricByDate(data, page, 'ImageAtmosferaNochLoading', date, browser);
+	table.im9 = addMetricByDate(data, page, 'ImageKosmosPlanetaLoading', date, browser);
+	table.im10 = addMetricByDate(data, page, 'ImageKosmosLoading', date, browser);
+	table.im11 = addMetricByDate(data, page, 'ImageKosmicheskoeProstranstvoLoading', date, browser);
+	table.im12 = addMetricByDate(data, page, 'ImageVselennayaLoading', date, browser);
+	table.im13 = addMetricByDate(data, page, 'ImageTemnotaLoading', date, browser);
+	table.im14 = addMetricByDate(data, page, 'ImageSaturnLoading', date, browser);
+	table.im15 = addMetricByDate(data, page, 'ImageAtmosferaNeboLoading', date, browser);
+	table.imtot = addMetricByDate(data, page, 'TotalImagesLoading', date, browser);
+	console.table(table);
+}
+
+// Calculate all metrics for day
 function calcMetricsByDate(data, page, date, browser) {
 	console.log(`All metrics for ${date}:`);
 
@@ -166,7 +191,6 @@ function calcMetricsByDate(data, page, date, browser) {
 	table.ttfb = addMetricByDate(data, page, 'TtFB', date, browser);
 	table.pageLoadTime = addMetricByDate(data, page, 'PageLoadTime', date, browser);
 	table.compressionSavings = addMetricByDate(data, page, 'CompressionSavings', date, browser);
-
 	console.table(table);
 
 	table = {};
@@ -179,7 +203,6 @@ function calcMetricsByDate(data, page, date, browser) {
 	table.im1 = addMetricByDate(data, page, 'Image1Download', date, browser);
 	table.im2 = addMetricByDate(data, page, 'Image2Download', date, browser);
 	table.im3 = addMetricByDate(data, page, 'Image3Download', date, browser);	
-
 	console.table(table);
 };
 
@@ -188,8 +211,12 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9305
 	.then(result => {
 		let data = prepareData(result);
 
+	//Metrics for default Send-page
+		//calcMetricsByDate(data, 'send test', '2021-10-29');
+	//console.log('************************************');
+	
 	//Metrics for Home-page
-		calcMetricsByDate(data, 'Home-page test', '2021-10-29');
+		//calcMetricsByDate(data, 'Home-page test', '2021-10-29');
 		//console.log('------------------------------------');
 //This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
 		//showMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-28');
@@ -205,10 +232,10 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9305
 		//console.log('------------------------------------');
 //This will show comparsion metrics for different types of platform (mobile & desktop)
 		//comparePlatformTypeMetric(data, "Home-page test", '2021-10-28');
-		//console.log('************************************');
+	//console.log('************************************');
 
 		//Metrics for History-page
-		calcMetricsByDate(data, 'History-page test', '2021-10-29');
+		//calcMetricsByDate(data, 'History-page test', '2021-10-29');
 		//console.log('------------------------------------');
 //This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
 		//showMetricByPeriod(data, 'History-page test', '2021-10-25', '2021-10-28');
@@ -224,5 +251,26 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9305
 		//console.log('------------------------------------');
 //This will show comparsion metrics for different types of platform (mobile & desktop)
 		//comparePlatformTypeMetric(data, "History-page test", '2021-10-28');
-		//console.log('************************************');
+	//console.log('************************************');
+
+		//Metrics for Gallery-page
+		calcMetricsByDate(data, 'Gallery-page test', '2021-10-29');
+		//console.log('------------------------------------');
+//This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
+		//showMetricByPeriod(data, 'Gallery-page test', '2021-10-25', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
+		//showAllMetricByPeriod(data, 'Gallery-page test', '2021-10-25', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show metrics data for "User" with id "User-pochemypotomy123" for 28.10.21
+		//showSession(data, '2021-10-28', 'User', 'User-pochemypotomy123');
+		//console.log('------------------------------------');
+//This will show comparsion metrics for users browsers each in separate table for 28.10.21
+		//compareMetric(data, 'Gallery-page test', '2021-10-28');
+		//console.log('------------------------------------');
+//This will show comparsion metrics for different types of platform (mobile & desktop)
+		//comparePlatformTypeMetric(data, "Gallery-page test", '2021-10-28');
+//This will show metrics for loading images from Internet for 29.10.21
+		//calcImageDownloadMetrics(data, 'Gallery-page test', '2021-10-29');
+	//console.log('************************************');
 	});

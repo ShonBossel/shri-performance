@@ -21,7 +21,7 @@
                 <button class="original-button"><a href="../index.html">History</a></button>
                 <button class="original-button"><a href="./history.html">History</a></button>
                 <button class="original-button disabled-button" disabled>Gallery</button>
-                <button class="original-button"><a href="./about.html">About</a></button>
+                <button class="original-button"><a href="../../send.html">Send</a></button>
             </div>
         </header>
         
@@ -50,7 +50,7 @@
 
             let counter = new Counter();
     
-            counter.init('D8F28E50-3339-11EC-9EDF-9F93055895B1', String(Math.random()).substr(2, 12), 'Home-page test');
+            counter.init('D8F28E50-3339-11EC-9EDF-9F93055895B1', String(Math.random()).substr(2, 12), 'Gallery-page test');
             counter.setAdditionalParams({
                 env: 'production',
                 platform: navigator.platform,
@@ -120,6 +120,61 @@
             });
             observer.observe({entryTypes: ["element"]});
         })();
+
+        let startImageLoadingTime, endImageLoadingTime;
+
+        function downloadImages() {
+            const images = {
+                ZemlyAtmosfera: 'https://img3.akspic.ru/originals/5/8/1/5/6/165185-zemlya-atmosfera-mir-lazurnyj-luna-7680x4320.jpg?attachment=1',
+                ZemlyaTemnota: 'https://img2.akspic.ru/originals/5/9/4/9/4/149495-ledyanaya_forma-zemlya-temnota-relef-priroda-8256x5504.jpg?attachment=1',
+                Atmosfera: 'https://img1.akspic.ru/originals/5/9/5/5/3/135595-nebo-cifrovoe_iskusstvo-atmosfera-prostranstvo_iskusstva-art-7680x4320.jpg?attachment=1',
+                Vselennaya: 'https://img2.akspic.ru/originals/8/9/5/5/3/135598-vselennaya-goluboj_mramor-nebo-sfera-kosmicheskoe_prostranstvo-8000x8000.jpg?attachment=1',
+                Kosmos: 'https://img2.akspic.ru/originals/7/5/2/3/4/143257-kosmicheskoe_prostranstvo-kosmos-nauchnaya_fantaziya-art-fantasticheskoe_iskusstvo-9600x6400.jpg?attachment=1',
+                AtmosferaNebo: 'https://img2.akspic.ru/originals/9/0/3/3/4/143309-podzemnye_vody-oblako-atmosfera-nebo-tumannost-15200x9500.jpg?attachment=1',
+                KosmosPlaneta: 'https://img3.akspic.ru/originals/8/4/4/0/3/130448-zhivopis-kosmos-planeta-prostranstvo-sfera-8000x4500.jpg?attachment=1',
+                Galaktika: 'https://img2.akspic.ru/originals/8/2/3/5/25328-vselennaya-astronomicheskij_obekt-galaktika-kosmos-atmosfera-7680x4320.jpg?attachment=1',
+                PlanetaDnem: 'https://img1.akspic.ru/originals/8/3/7/2/22738-planeta-dnevnoe_vremya-prostranstvo-vselennaya-kosmicheskoe_prostranstvo-7680x4320.jpg?attachment=1',
+                Ekzoplaneta: 'https://img3.akspic.ru/originals/8/2/2/2/22228-hudozhnik-artist-ekzoplaneta-art-kosmos-8000x4500.jpg?attachment=1',
+                Saturn: 'https://img2.akspic.ru/originals/7/7/3/2/22377-saturn-prostranstvo-vselennaya-astronomicheskij_obekt-atmosfera-7680x4320.jpg?attachment=1',
+                KosmicheskoeProstranstvo: 'https://img2.akspic.ru/originals/6/1/0/2/22016-prostranstvo-kosmicheskoe_prostranstvo-zemlya-astronomicheskij_obekt-sfera-7680x4320.jpg?attachment=1',
+                Temnota: 'https://img2.akspic.ru/originals/8/6/8/2/22868-planeta-kosmicheskoe_prostranstvo-temnota-prostranstvo-svet-7680x4320.jpg?attachment=1',
+                AtmosferaNoch: 'https://img1.akspic.ru/originals/1/6/8/0/20861-zemlya-kosmicheskoe_prostranstvo-noch-dnevnoe_vremya-atmosfera-10000x5624.jpg?attachment=1',
+                KosmosAstro: 'https://img1.akspic.ru/originals/6/3/5/2/22536-kosmos-vselennaya-astronomiya-astronomicheskij_obekt-galaktika-7680x4800.jpg?attachment=1'
+            };
+            const div = document.querySelector('.main-block-images-block');
+            startImageLoadingTime = new Date();
+            endImageLoadingTime = new Date();
+
+            for(let img in images) {
+                let image = new Image();
+                image.className = "gallery-image";
+                image.onload = function() {
+                    performance.mark(`endImage${img}Loading`);
+                    let date = new Date();
+                    counter.send(`Image${img}Loading`, ((date - startImageLoadingTime) / 1000).toFixed(4));
+                    console.log(`End image "${img}" loading -`, ((date - startImageLoadingTime) / 1000).toFixed(4), 'sec');
+                    if(date > endImageLoadingTime) {
+                        endImageLoadingTime = date;
+                    }
+                }
+                image.src = images[img];
+                image.elementtiming = "image-download";
+                image.title = image.alt = 'Space Image';
+                div.appendChild(image);
+            }
+        };
+        document.querySelector('.main-block-images-but').onclick = function() {
+            performance.mark('startImageLoading');
+            downloadImages();
+            performance.mark('endImageLoading');
+
+// This function will calculate total time of downloading images after 60 sec after button click
+            setTimeout(() => {
+                const totalImagesLoading = ((endImageLoadingTime - startImageLoadingTime) / 1000).toFixed(4);
+                console.log('Images total downloading time -', totalImagesLoading, 'sec');
+                counter.send('TotalImagesLoading', totalImagesLoading);
+            },60000);
+        } 
         </script>
     </body>
 </html>
