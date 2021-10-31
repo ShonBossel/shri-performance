@@ -3,7 +3,7 @@
     <head>
         <link rel="icon" href="../../public/favicon.ico" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="robots" content="index" />           <!--Letting searching robots (Yandex & Google) index pages-->
+        <meta name="robots" content="index" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <meta name="description" content="Web site for Perfomance-tests" />
@@ -25,7 +25,7 @@
             </div>
         </header>
         
-        <h3  elementtiming="first-content-text">Данная страница содержит в себе большой объем весомых картинок, которые отображаются после нажатия на кнопку. Результаты ее тестирования должны быть со значимыми цифрами:).</h3>
+        <h3  elementtiming="first-content-text">This page содержит в себе большой объем весомых картинок, которые отображаются после нажатия на кнопку. Результаты ее тестирования должны быть со значимыми цифрами:).</h3>
         <h2>Gallery of images</h2>
         <div class="main-block">
             <div class="main-block-video">
@@ -81,7 +81,7 @@
             const ttfb = (time.responseStart - time.navigationStart).toFixed(4);             //Time to First Byte
             console.log('ttfb - ', ttfb);
 
-        //Page load time DOESN'T WORK!!!! .domComlete returns 0!!!!!!!!!!!!! .duration - the same!!!
+        //Page load time doesn't work because .domComlete returns 0, .duration - the same!!!
             const pageLoadTime = (performance.getEntriesByType("navigation")[0].domComplete - performance.getEntriesByType("navigation")[0].startTime).toFixed(4);
             console.log('pageLoadTime - ', pageLoadTime);
 

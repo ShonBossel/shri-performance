@@ -77,7 +77,7 @@
             const ttfb = (time.responseStart - time.navigationStart).toFixed(4);             //Time to First Byte
             console.log('ttfb - ', ttfb);
 
-        //Page load time DOESN'T WORK!!!! .domComlete returns 0!!!!!!!!!!!!! .duration - the same!!!
+        //Page load time doesn't work because .domComlete returns 0, .duration - the same
             const pageLoadTime = (performance.getEntriesByType("navigation")[0].domComplete - performance.getEntriesByType("navigation")[0].startTime).toFixed(4);
             console.log('pageLoadTime - ', pageLoadTime);
 

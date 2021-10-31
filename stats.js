@@ -71,7 +71,7 @@ function showAllMetricByPeriod(data, page, startDate, endDate) {
 }
 
 // This function shows user session
-function showSession(data, date, user, id/* = true*/) {
+function showSession(data, date, user, id) {
 	console.log(`Session information for user "${user}" on ${date}:`);
 
 	let sampleData = data
@@ -94,7 +94,6 @@ function showSession(data, date, user, id/* = true*/) {
 // This function compares metric in different sclices and shows info of each browser in each table
 function compareMetric(data, page, date) {
 	console.log('Comparsion of metrics of different browsers:');
-	//CHANGE THIS!!!! Not needed to view one type of browser for few times
 	let browsers = [...new Set(data.map(item => item.additional.browser))];
 
 	for (let browser of browsers) {
@@ -117,7 +116,7 @@ function comparePlatformTypeMetric(data, page, date) {
 
 // Example
 // This function adds metric for chosen date
-function addMetricByDate(data, page, name, date, browser/* = true*/) {
+function addMetricByDate(data, page, name, date, browser) {
 	let sampleData;
 	if(browser === 'desktop' || browser === 'mobile') {
 		const platformType = browser;
@@ -231,71 +230,71 @@ fetch('https://shri.yandex/hw/stat/data?counterId=D8F28E50-3339-11EC-9EDF-9F9305
 		let data = prepareData(result);
 
 	//Metrics for default Send-page
-		//calcMetricsByDate(data, 'send test', '2021-10-29');
+		//calcMetricsByDate(data, 'send test', '2021-10-31');
 	//console.log('************************************');
 	
 	//Metrics for Home-page
-		calcMetricsByDate(data, 'Home-page test', '2021-10-29');
+		calcMetricsByDate(data, 'Home-page test', '2021-10-31');
 		console.log('------------------------------------');
-//This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
-		//showMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-28');
+//This will show metrics data in each table for each day inside interval from 28.10.21 till 31.10.21
+		//showMetricByPeriod(data, 'Home-page test', '2021-10-28', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
-		//showAllMetricByPeriod(data, 'Home-page test', '2021-10-25', '2021-10-28');
+//This will show metrics data in one total table for all days inside interval from 28.10.21 till 31.10.21
+		//showAllMetricByPeriod(data, 'Home-page test', '2021-10-28', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show metrics data for "User" with id "User-1" for 28.10.21
-		//showSession(data, '2021-10-28', 'User', 'User-1');
+//This will show metrics data for "User" with id "User-1" for 31.10.21
+		//showSession(data, '2021-10-31', 'User', 'User-1');
 		//console.log('------------------------------------');
-//This will show comparsion metrics for users browsers each in separate table for 28.10.21
-		//compareMetric(data, 'Home-page test', '2021-10-28');
+//This will show comparsion metrics for users browsers each in separate table for 31.10.21
+		//compareMetric(data, 'Home-page test', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show comparsion metrics for different types of platform (mobile & desktop)
-		//comparePlatformTypeMetric(data, "Home-page test", '2021-10-28');
-//This will show metrics data for Larjest Contentfull Paint on 29.10.21
-		//calcLCP(data, 'Home-page test', '2021-10-29');
+//This will show comparsion metrics for different types of platform (mobile & desktop) for 31.10.21
+		//comparePlatformTypeMetric(data, "Home-page test", '2021-10-31');
+//This will show metrics data for Larjest Contentfull Paint on 31.10.21
+		//calcLCP(data, 'Home-page test', '2021-10-31');
 	//console.log('************************************');
 
 		//Metrics for History-page
-		calcMetricsByDate(data, 'History-page test', '2021-10-29');
+		calcMetricsByDate(data, 'History-page test', '2021-10-31');
 		console.log('------------------------------------');
-//This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
-		//showMetricByPeriod(data, 'History-page test', '2021-10-25', '2021-10-28');
+//This will show metrics data in each table for each day inside interval from 28.10.21 till 31.10.21
+		//showMetricByPeriod(data, 'History-page test', '2021-10-28', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
-		//showAllMetricByPeriod(data, 'History-page test', '2021-10-25', '2021-10-28');
+//This will show metrics data in one total table for all days inside interval from 28.10.21 till 31.10.21
+		//showAllMetricByPeriod(data, 'History-page test', '2021-10-28', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show metrics data for "User" with id "User-1" for 28.10.21
-		//showSession(data, '2021-10-28', 'User', 'User-1');
+//This will show metrics data for "User" with id "User-1" for 31.10.21
+		//showSession(data, '2021-10-31', 'User', 'User-1');
 		//console.log('------------------------------------');
-//This will show comparsion metrics for users browsers each in separate table for 28.10.21
-		//compareMetric(data, 'History-page test', '2021-10-28');
+//This will show comparsion metrics for users browsers each in separate table for 31.10.21
+		//compareMetric(data, 'History-page test', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show comparsion metrics for different types of platform (mobile & desktop)
-		//comparePlatformTypeMetric(data, "History-page test", '2021-10-28');
-//This will show metrics data for Larjest Contentfull Paint on 29.10.21
-		//calcLCP(data, 'Home-page test', '2021-10-29');
+//This will show comparsion metrics for different types of platform (mobile & desktop) for 31.10.21
+		//comparePlatformTypeMetric(data, "History-page test", '2021-10-31');
+//This will show metrics data for Larjest Contentfull Paint on 31.10.21
+		//calcLCP(data, 'Home-page test', '2021-10-31');
 	//console.log('************************************');
 
 		//Metrics for Gallery-page
-		calcMetricsByDate(data, 'Gallery-page test', '2021-10-29');
+		calcMetricsByDate(data, 'Gallery-page test', '2021-10-31');
 		console.log('------------------------------------');
-//This will show metrics data in each table for each day inside interval from 25.10.21 till 28.10.21
-		//showMetricByPeriod(data, 'Gallery-page test', '2021-10-25', '2021-10-28');
+//This will show metrics data in each table for each day inside interval from 28.10.21 till 31.10.21
+		//showMetricByPeriod(data, 'Gallery-page test', '2021-10-28', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show metrics data in one total table for all days inside interval from 25.10.21 till 28.10.21
-		//showAllMetricByPeriod(data, 'Gallery-page test', '2021-10-25', '2021-10-28');
+//This will show metrics data in one total table for all days inside interval from 28.10.21 till 31.10.21
+		//showAllMetricByPeriod(data, 'Gallery-page test', '2021-10-28', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show metrics data for "User" with id "User-1" for 28.10.21
-		//showSession(data, '2021-10-28', 'User', 'User-1');
+//This will show metrics data for "User" with id "User-1" for 31.10.21
+		//showSession(data, '2021-10-31', 'User', 'User-1');
 		//console.log('------------------------------------');
-//This will show comparsion metrics for users browsers each in separate table for 28.10.21
-		//compareMetric(data, 'Gallery-page test', '2021-10-28');
+//This will show comparsion metrics for users browsers each in separate table for 31.10.21
+		//compareMetric(data, 'Gallery-page test', '2021-10-31');
 		//console.log('------------------------------------');
-//This will show comparsion metrics for different types of platform (mobile & desktop)
-		//comparePlatformTypeMetric(data, "Gallery-page test", '2021-10-28');
-//This will show metrics for loading images from Internet for 29.10.21
-		//calcImageDownloadMetrics(data, 'Gallery-page test', '2021-10-29');
-//This will show metrics data for Larjest Contentfull Paint on 29.10.21
-		//calcLCP(data, 'Home-page test', '2021-10-29');
+//This will show comparsion metrics for different types of platform (mobile & desktop) for 31.10.21
+		//comparePlatformTypeMetric(data, "Gallery-page test", '2021-10-31');
+//This will show metrics for loading images from Internet for 31.10.21
+		//calcImageDownloadMetrics(data, 'Gallery-page test', '2021-10-31');
+//This will show metrics data for Larjest Contentfull Paint on 31.10.21
+		//calcLCP(data, 'Home-page test', '2021-10-31');
 	//console.log('************************************');
 	});

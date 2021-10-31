@@ -160,7 +160,7 @@
             const ttfb = (time.responseStart - time.navigationStart).toFixed(4);             //Time to First Byte
             console.log('ttfb - ', ttfb);
 
-        //Page load time DOESN'T WORK!!!! .loadEventStart returns 0!!!!!!!!!!!!!
+        //Page load time doesn't work because .loadEventStart returns 0
             const pageLoadTime = time.loadEventStart - time.navigationStart;
             console.log('pageLoadTime - ', pageLoadTime);
 
