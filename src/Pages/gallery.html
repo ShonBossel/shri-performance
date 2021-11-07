@@ -86,7 +86,7 @@
             console.log('pageLoadTime - ', pageLoadTime);
 
         //Compression
-            const compressionSavings = 1 - (performance.getEntriesByType("navigation")[0].decodedBodySize / performance.getEntriesByType("navigation")[0].encodedBodySize) | 'none';
+            const compressionSavings = 1 - (performance.getEntriesByType("navigation")[0].decodedBodySize / performance.getEntriesByType("navigation")[0].encodedBodySize) || 'none';
             console.log('Compression :', compressionSavings);
     
             counter.send('DNS', dns);
